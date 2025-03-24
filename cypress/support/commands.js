@@ -1,3 +1,12 @@
+import 'cypress-file-upload';
+
+Cypress.Commands.add("setLocalStorage", () => {
+    cy.window().then((win) => {
+      win.localStorage.setItem("session", JSON.stringify(Cypress.env("token")));
+      win.localStorage.setItem("user", JSON.stringify(Cypress.env("user")));
+    });
+  });
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -9,9 +18,7 @@
 // ***********************************************
 //
 //
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
+// -- This is a parent command -
 //
 // -- This is a child command --
 // Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })

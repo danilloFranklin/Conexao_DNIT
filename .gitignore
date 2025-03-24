@@ -9,5 +9,7 @@ cypress/results/*
 cypress/reports/*
 cypress/screenshots/*
 cypress/videos/*
+cypress.env.json
+
 
 # End of https://www.toptal.com/developers/gitignore/api/cypressio
