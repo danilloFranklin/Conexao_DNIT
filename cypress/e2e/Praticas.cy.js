@@ -1,13 +1,13 @@
 import { pt_BR, faker } from "@faker-js/faker";
 
-const Foto_teste = "Foto_teste.jpg";
+export const Foto_teste = "Foto_teste.jpg";
 export const textocurto = "Automação - " + faker.lorem.words(2);
 export const textolongo = faker.lorem.paragraphs(1);
-const yearRandom = Math.floor(Math.random() * 12) + 1;
-const curricularComponentrandom = Math.floor(Math.random() * 8) + 1;
-const studentsRandom = Math.floor(Math.random() * 120) + 1;
-const randomDay = Math.floor(Math.random() * 31) + 1;
-const dataSelector = `[aria-label="Mar\\E7o ${randomDay}, 2025"]`;
+export const yearRandom = Math.floor(Math.random() * 12) + 1;
+export const curricularComponentrandom = Math.floor(Math.random() * 8) + 1;
+export const studentsRandom = Math.floor(Math.random() * 120) + 1;
+export const randomDay = Math.floor(Math.random() * 31) + 1;
+export const dataSelector = `[aria-label="Mar\\E7o ${randomDay}, 2025"]`;
 
 describe("Praticas", () => {
   beforeEach(() => {
