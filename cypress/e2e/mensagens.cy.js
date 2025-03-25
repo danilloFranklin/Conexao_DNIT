@@ -1,5 +1,6 @@
 import { pt_BR, faker } from "@faker-js/faker";
 import { it } from "mocha";
+const timeoutValue = Cypress.config('defaultCommandTimeout');
 
 export const Foto_teste = "Foto_teste.jpg";
 export const yearRandom = Math.floor(Math.random() * 12) + 1;

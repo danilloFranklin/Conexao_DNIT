@@ -59,7 +59,9 @@ describe("Cursos", () => {
 
   it("Acessar Curso", () => {
     cy.get(".header-menu > .br-button > .fas").click();
+    cy.wait(1000);
     cy.get('.menu > [href="/conexao/cursos"]').click();
+    cy.wait(1000);
     cy.contains("Teste Automação - Não excluir").click();
     cy.scrollTo(0, 1275);
     cy.get('[href="https://conexao-dnit-hom.labtrans.ufsc.br/conexao/cursos/2"]').should("have.attr", "target", "_blank").invoke("removeAttr", "target").click();

@@ -43,9 +43,7 @@ describe("Iniciativas", () => {
   });
   it("Editar Iniciativa", () => {
     cy.get("#Iniciativas svg").click();
-    cy.get(
-      ":nth-child(1) > :nth-child(5) > .tooltip-container > .br-button > .fas"
-    ).click();
+    cy.get(":nth-child(1) > :nth-child(5) > .tooltip-container > .br-button > .fas").click();
     cy.get("#title").clear();
     cy.get("#title").type("Edição " + textocurto);
     cy.get(".mt-0").click();

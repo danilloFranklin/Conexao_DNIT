@@ -1,4 +1,5 @@
 import { pt_BR, faker } from "@faker-js/faker";
+const timeoutValue = Cypress.config('defaultCommandTimeout');
 
 export const Foto_teste = "Foto_teste.jpg";
 export const textocurto = "Automação - " + faker.lorem.words(2);
