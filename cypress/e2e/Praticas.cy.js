@@ -7,8 +7,11 @@ export const textolongo = faker.lorem.paragraphs(1);
 export const yearRandom = Math.floor(Math.random() * 12) + 1;
 export const curricularComponentrandom = Math.floor(Math.random() * 8) + 1;
 export const studentsRandom = Math.floor(Math.random() * 120) + 1;
-export const randomDay = Math.floor(Math.random() * 31) + 1;
+export const today = new Date();
+export const day = today.getDate();
+export const randomDay = Math.floor(Math.random() * day) + 1;
 export const dataSelector = `[aria-label="Mar\\E7o ${randomDay}, 2025"]`;
+
 
 describe("Praticas", () => {
   beforeEach(() => {
@@ -23,7 +26,8 @@ describe("Praticas", () => {
     cy.window().its("localStorage.user").should("exist");
     cy.wait(1000);
   });
-  it("Cadastrar pratica", () => {
+  it.only("Cadastrar pratica", () => {
+    cy.log(randomDay);
     cy.get(".header-menu > .br-button > .fas").click();
     cy.get('.align-items-center > [href="/conexao/praticas"]').click();
     cy.contains("Conte como foi realizar a atividade de Educação para o Trânsito integrada aos saberes escolares, do Programa Conexão DNIT. Compartilhe suas experiências para motivar e conectar mais colegas nessa rede de educação para a vida!").should("be.visible");
@@ -35,6 +39,7 @@ describe("Praticas", () => {
     cy.get("#curricularComponent > .br-input > .br-button > .fas").click();
     cy.get(`#curricularComponent > .br-list > :nth-child(${curricularComponentrandom}) > .br-radio > label`).click();
     cy.get(".p-0:nth-child(4) .fas").click();
+    cy.wait(1000);
     cy.get(":nth-child(4) > .medium > #year > .br-list > :nth-child(1) > .br-radio > label").click();
     cy.get("#curriculumContent").type(textocurto);
     cy.get("#dateOfCompletion").click();
@@ -47,17 +52,9 @@ describe("Praticas", () => {
     cy.contains("Foto_teste.jpg").should("be.visible");
 
     cy.get(".row > :nth-child(2) > .br-button").click();
-    cy.get(".br-scrim:nth-child(7) .container-fluid").should("not.be.visible")
-      .then(($modal) => {
-        if ($modal.length) {
-          // não parecer, segue"
-          cy.log("Modal não encontrado, continuando com o teste.");
-        }
-           else {
-          cy.get('[style="display: flex; justify-content: center;"] > .secondary').click();
-          cy.log("Modal encontrado e botão clicado.");
-    
-      }
+    cy.wait(1000);
+    cy.get(':nth-child(1) > [data-th="Título"]').click();
+    cy.contains(textolongo).should("be.visible");
     });
   });
   it("pratica repetida", () => {
@@ -97,4 +94,3 @@ describe("Praticas", () => {
         }
       });
   });
-});
