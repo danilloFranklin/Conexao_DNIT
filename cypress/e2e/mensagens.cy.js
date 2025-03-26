@@ -119,7 +119,7 @@ it('Envio Suporte pedagogico', () => {
     cy.contains("Foto_teste.jpg").should("be.visible");
   });
 
-  it.only('Envio de Comunicação Interna', () => {
+  it('Envio de Comunicação Interna', () => {
     let textocurto = "Automação - " + faker.lorem.words(2);
     let textolongo = faker.lorem.paragraphs(1);
     cy.get(".header-menu > .br-button > .fas").click();
@@ -175,9 +175,9 @@ it('Envio Suporte pedagogico', () => {
     //apenas um click não está funcionando
 
     cy.get('.false > .primary').contains('Enviar').click();
-
+    cy.wait(1000);
     cy.get('.false > .primary').contains('Enviar').click();
-
+    cy.wait(1000);
     cy.get(':nth-child(2) > button > .name > .row').click();
         cy.contains(textocurto).should("be.visible");
 
