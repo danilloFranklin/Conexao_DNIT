@@ -11,62 +11,69 @@ describe("Cursos", () => {
     cy.setLocalStorage();
     cy.reload();
 
+    // Verifica se a sessão e o usuário estão armazenados
     cy.window().its("localStorage.session").should("exist");
     cy.window().its("localStorage.user").should("exist");
   });
 
-  it("Criar comentario", () => {
-    cy.get(".header-menu > .br-button > .fas").click();
-    cy.get('.menu > [href="/conexao/cursos"]').click();
-    cy.contains(
-      "Nesta área, você acessa materiais de formação completos, como capacitações para educadores e cursos livres relacionados ao tema de trânsito."
-    ).should("be.visible");
-    cy.contains("Teste Automação - Não excluir").click();
-    cy.scrollTo(0, 1275);
+  const acessarMenuCursos = () => {
+    cy.get("div.header-menu i").click();
+    cy.get("div.header-bottom div:nth-of-type(3) > a").click();
+    cy.contains("Teste Automação - Não excluir").should("be.visible");
+  };
+
+  it("Criar comentário", () => {
+    acessarMenuCursos();
+    cy.get("div.false > div:nth-of-type(1) div.w-100 img").should("exist").click();
+
+    // Digita e publica um comentário
     cy.get("#txtComment").type(textoAleatorio);
     cy.get(".mt-sm-0").click();
+
+    // Confirma que o comentário foi publicado
     cy.contains(textoAleatorio).should("be.visible");
   });
 
-  it("Excluir comentario", () => {
-    cy.get(".header-menu > .br-button > .fas").click();
-    cy.get('.menu > [href="/conexao/cursos"]').click();
+  it("Excluir comentário", () => {
+    acessarMenuCursos();
+    cy.get("div.false > div:nth-of-type(1) div.w-100 img").should("exist").click();
 
-    cy.contains(
-      "Nesta área, você acessa materiais de formação completos, como capacitações para educadores e cursos livres relacionados ao tema de trânsito."
-    ).should("be.visible");
-    cy.contains("Teste Automação - Não excluir").click();
-    cy.scrollTo(0, 1275);
+    // Verifica se o comentário existe antes de tentar excluir
     cy.contains(textoAleatorio).should("be.visible");
-    cy.get(
-      ":nth-child(9) > :nth-child(1) > .content > .row > .br-button > img"
-    ).click();
+
+    // Melhorar o seletor do botão de exclusão (caso possível, prefira `data-testid`)
+    cy.get('.br-item:nth-child(9) [alt="icon-trash"]').click();
+
+    // Confirma que o comentário foi removido
     cy.contains(textoAleatorio).should("not.exist");
   });
 
   it("Baixar arquivo", () => {
-    cy.get(".header-menu > .br-button > .fas").click();
-    cy.get('.menu > [href="/conexao/cursos"]').click();
-    cy.contains(
-      "Nesta área, você acessa materiais de formação completos, como capacitações para educadores e cursos livres relacionados ao tema de trânsito."
-    ).should("be.visible");
+    acessarMenuCursos();
     cy.contains("Teste Automação - Não excluir").click();
-    cy.scrollTo(0, 1275);
     cy.get(".clickable-item").click();
+
+    // Aguarda o arquivo ser baixado
     cy.readFile(filePath, { timeout: 10000 }).should("exist");
+    // Exclui o arquivo após teste
     cy.task("deleteFile", filePath).should("equal", true);
   });
 
   it("Acessar Curso", () => {
-    cy.get(".header-menu > .br-button > .fas").click();
-    cy.wait(1000);
-    cy.get('.menu > [href="/conexao/cursos"]').click();
-    cy.wait(1000);
+    acessarMenuCursos();
     cy.contains("Teste Automação - Não excluir").click();
-    cy.scrollTo(0, 1275);
-    cy.get('[href="https://conexao-dnit-hom.labtrans.ufsc.br/conexao/cursos/2"]').should("have.attr", "target", "_blank").invoke("removeAttr", "target").click();
-    cy.url().should("include", "https://conexao-dnit-hom.labtrans.ufsc.br/conexao/cursos/2");
+
+    // Remove o `target="_blank"` para abrir na mesma aba
+    cy.get('[href*="/conexao/cursos/2"]')
+      .should("have.attr", "target", "_blank")
+      .invoke("removeAttr", "target")
+      .click();
+
+    // Confirma que a URL está correta
+    cy.url().should("include", "/conexao/cursos/2");
+
+    // Verifica se o curso foi carregado corretamente
     cy.get(".br-button > .icon").click();
-    cy.contains('Busque aqui atividades de Educação para o Trânsito').should("be.visible");
+    cy.contains("Busque aqui atividades de Educação para o Trânsito").should("be.visible");
   });
 });
