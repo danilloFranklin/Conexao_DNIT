@@ -11,24 +11,24 @@ describe("Paginas iniciais", () => {
     cy.window().its("localStorage.user").should("exist");
   });
   it("Sobre o Conexão", () => {
-    cy.get(".header-menu > .br-button > .fas").click(); 
-    cy.get(":nth-child(1) > #\\34 2").click(); 
+    cy.get(".header-menu > .br-button > .fas").should("be.visible").click(); 
+    cy.get(":nth-child(1) > #\\34 2").should("be.visible").click(); 
     cy.get("#widget2").should("be.visible"); 
-    cy.get(".br-button > .icon").click(); 
+    cy.get(".br-button > .icon").should("be.visible").click(); 
     cy.contains('Busque aqui atividades de Educação para o Trânsito').should("exist"); 
   });
 
   it("Como participar", () => {
-    cy.get(".header-menu > .br-button > .fas").click(); 
-    cy.get(".menu-body > :nth-child(2) > #\\34 3").click(); 
+    cy.get(".header-menu > .br-button > .fas").should("be.visible").click(); 
+    cy.get(".menu-body > :nth-child(2) > #\\34 3").should("be.visible").click(); 
     cy.get('[style="margin-bottom: 200px;"] > .contrast-ignore-bg').should("be.visible"); 
     cy.get(".br-button > .icon").click(); 
     cy.contains('Busque aqui atividades de Educação para o Trânsito').should("exist");
   });
 
   it("Cursos", () => {
-    cy.get(".header-menu > .br-button > .fas").click(); 
-    cy.get(":nth-child(3) > #\\34 5").click(); 
+    cy.get(".header-menu > .br-button > .fas").should("be.visible").click(); 
+    cy.get(":nth-child(3) > #\\34 5").should("be.visible").click(); 
     cy.contains(
       "Nesta área, você acessa materiais de formação completos, como capacitações para educadores e cursos livres relacionados ao tema de trânsito."
     ).should("be.visible"); 
@@ -37,24 +37,24 @@ describe("Paginas iniciais", () => {
   });
 
   it("Projetos e Campanhas", () => {
-    cy.get(".header-menu > .br-button > .fas").click(); 
-    cy.get(":nth-child(4) > #\\34 6").click(); 
+    cy.get(".header-menu > .br-button > .fas").should("be.visible").click(); 
+    cy.get(":nth-child(4) > #\\34 6").should("be.visible").click(); 
     cy.contains("Projetos e Campanhas em Destaque").should("be.visible"); 
     cy.get(".br-button > .icon").click(); 
     cy.contains('Busque aqui atividades de Educação para o Trânsito').should("exist");
   });
 
   it("Atividades", () => {
-    cy.get(".header-menu > .br-button > .fas").click(); 
-    cy.get(":nth-child(5) > #\\34 8").click(); 
+    cy.get(".header-menu > .br-button > .fas").should("be.visible").click(); 
+    cy.get(":nth-child(5) > #\\34 8").should("be.visible").click(); 
     cy.contains("Ensino Fundamental").should("be.visible"); 
-    cy.get(".br-button > .icon").click(); 
+    cy.get(".br-button > .icon").should("be.visible").click(); 
     cy.contains('Busque aqui atividades de Educação para o Trânsito').should("exist");
   });
 
   it("Mensagens", () => {
-    cy.get(".header-menu > .br-button > .fas").click(); 
-    cy.get(":nth-child(6) > #\\35 0").click(); 
+    cy.get(".header-menu > .br-button > .fas").should("be.visible").click(); 
+    cy.get(":nth-child(6) > #\\35 0").should("be.visible").click(); 
     cy.get(":nth-child(3) > :nth-child(3) > a > .br-button").should(
       "be.visible"
     );
@@ -63,27 +63,27 @@ describe("Paginas iniciais", () => {
   });
 
   it("Minhas Práticas", () => {
-    cy.get(".header-menu > .br-button > .fas").click(); 
-    cy.get(":nth-child(7) > #\\35 7").click(); 
+    cy.get(".header-menu > .br-button > .fas").should("be.visible").click(); 
+    cy.get(":nth-child(7) > #\\35 7").should("be.visible").click(); 
     cy.contains("Minhas Práticas Pedagógicas").should("be.visible"); 
     cy.get(".br-button > .icon").click(); 
     cy.contains('Busque aqui atividades de Educação para o Trânsito').should("exist");
   });
 
   it("Praticas compartilhadas", () => {
-    cy.get(".header-menu > .br-button > .fas").click(); 
-    cy.get(":nth-child(8) > #\\35 8").click();
+    cy.get(".header-menu > .br-button > .fas").should("be.visible").click(); 
+    cy.get(":nth-child(8) > #\\35 8").should("be.visible").click();
     
     cy.contains("Práticas Compartilhadas").should("be.visible"); 
-    cy.get(".br-button > .icon").click(); 
+    cy.get(".br-button > .icon").should("be.visible").click(); 
     cy.contains('Busque aqui atividades de Educação para o Trânsito').should("exist");
   });
 
   it("Meus Planejamentos Pedagógicos", () => {
-    cy.get(".header-menu > .br-button > .fas").click(); 
-    cy.get(":nth-child(9) > #\\31 058").click(); 
+    cy.get(".header-menu > .br-button > .fas").should("be.visible").click(); 
+    cy.get(":nth-child(9) > #\\31 058").should("be.visible").click(); 
     cy.get(".mb-3 > a > .br-button").should("be.visible"); 
-    cy.get(".br-button > .icon").click(); 
+    cy.get(".br-button > .icon").should("be.visible").click(); 
     cy.contains('Busque aqui atividades de Educação para o Trânsito').should("exist");
   });
 
@@ -95,7 +95,7 @@ describe("Paginas iniciais", () => {
   });
 
   it("Iniciativas", () => {
-    cy.get("#Iniciativas svg").click(); 
+    cy.get("#Iniciativas svg").should("be.visible").click(); 
     cy.get(".table-title").should("be.visible"); 
     cy.get(".br-button > .icon").click(); 
     cy.contains('Busque aqui atividades de Educação para o Trânsito').should("exist");

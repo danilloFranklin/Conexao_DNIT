@@ -9,7 +9,7 @@ module.exports = defineConfig({
   animationDistanceThreshold: 5, // Faz Cypress ignorar pequenas animações
     
   e2e: {
-    slowTestThreshold: 2000, // Define quando um teste será considerado "lento"
+    slowMo: 500,
     setupNodeEvents(on, config) {
       config.editor = "code"; // Define VS Code como editor padrão
       

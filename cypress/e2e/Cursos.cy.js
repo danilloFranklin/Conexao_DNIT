@@ -17,8 +17,8 @@ describe("Cursos", () => {
   });
 
   const acessarMenuCursos = () => {
-    cy.get("div.header-menu i").click();
-    cy.get("div.header-bottom div:nth-of-type(3) > a").click();
+    cy.get("div.header-menu i").should("be.visible").click();
+    cy.get("div.header-bottom div:nth-of-type(3) > a").should("be.visible").click();
     cy.contains("Teste Automação - Não excluir").should("be.visible");
   };
 
@@ -61,7 +61,8 @@ describe("Cursos", () => {
 
   it("Acessar Curso", () => {
     acessarMenuCursos();
-    cy.contains("Teste Automação - Não excluir").click();
+    cy.wait();
+    cy.contains("Teste Automação - Não excluir").should("be.visible").click();
 
     // Remove o `target="_blank"` para abrir na mesma aba
     cy.get('[href*="/conexao/cursos/2"]')

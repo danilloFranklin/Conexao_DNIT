@@ -24,33 +24,40 @@ describe("Praticas", () => {
     cy.window().its("localStorage.user").should("exist");
     cy.wait(1000);
   });
+  const acessarMenuCursos = () => {
+    cy.get(".header-menu > .br-button > .fas").should("be.visible").click();
+    cy.wait(1000);
+    cy.get(':nth-child(7) > #\\35 7').should("be.visible").click();
+    cy.contains("Conte como foi realizar a atividade de Educação para o Trânsito integrada aos saberes escolares, do Programa Conexão DNIT. Compartilhe suas experiências para motivar e conectar mais colegas nessa rede de educação para a vida!").should("be.visible");
+  };
   it("Nova pratica", () => {
     let textocurto = "Automação - " + faker.lorem.words(2);
     let textolongo = faker.lorem.paragraphs(1);
-    cy.get(".header-menu > .br-button > .fas", { timeout: 30000 }).click();
-    cy.get('.align-items-center > [href="/conexao/praticas"]', { timeout: 30000 }).click();
+    cy.get(".header-menu > .br-button > .fas").should("be.visible").click();
+    cy.wait(1000);
+    cy.get(':nth-child(7) > #\\35 7').should("be.visible").click();
     cy.contains("Conte como foi realizar a atividade de Educação para o Trânsito integrada aos saberes escolares, do Programa Conexão DNIT. Compartilhe suas experiências para motivar e conectar mais colegas nessa rede de educação para a vida!").should("be.visible");
-    cy.get('[href="/conexao/praticas/enviar"]:nth-child(1)', { timeout: 30000 }).click();
+    cy.get('[href="/conexao/praticas/enviar"]:nth-child(1)').should("be.visible").click();
     cy.get(".br-checkbox > label").click();
-    cy.get(":nth-child(2) > .medium > #year > .br-input > .br-button > .fas", { timeout: 30000 }).click();
-    cy.get(`#year > .br-list > :nth-child(${yearRandom}) > .br-radio > label`, { timeout: 30000 }).click();
-    cy.get("#curricularComponent > .br-input > .br-button > .fas", { timeout: 30000 }).click();
-    cy.get(`#curricularComponent > .br-list > :nth-child(${curricularComponentrandom}) > .br-radio > label`, { timeout: 30000 }).click();
+    cy.get(":nth-child(2) > .medium > #year > .br-input > .br-button > .fas").should("be.visible").click();
+    cy.get(`#year > .br-list > :nth-child(${yearRandom}) > .br-radio > label`).should("exist").click();
+    cy.get("#curricularComponent > .br-input > .br-button > .fas").should("be.visible").click();
+    cy.get(`#curricularComponent > .br-list > :nth-child(${curricularComponentrandom}) > .br-radio > label`).should("be.visible").click();
     cy.wait(2000); // BO ta aqui nessa desgraça! 
 
-    cy.get(':nth-child(4) > .medium > #year > .br-input > .br-button > .fas', { timeout: 30000 }).click();
-    cy.get(':nth-child(4) > .medium > #year > .br-list > :nth-child(1) > .br-radio > label', { timeout: 30000 }).click()
-    cy.get("#curriculumContent", { timeout: 30000 }).type(textocurto);
-    cy.get("#dateOfCompletion", { timeout: 30000 }).click();
+    cy.get(':nth-child(4) > .medium > #year > .br-input > .br-button > .fas').should("be.visible").click();
+    cy.get(':nth-child(4) > .medium > #year > .br-list > :nth-child(1) > .br-radio > label').should("be.visible").click()
+    cy.get("#curriculumContent").should("be.visible").type(textocurto);
+    cy.get("#dateOfCompletion").should("be.visible").click();
     cy.get(dataSelector).click();
-    cy.get("#studentsNumber", { timeout: 30000 }).type(studentsRandom);
-    cy.get("#reportYourPractice", { timeout: 30000 }).type(textolongo);
+    cy.get("#studentsNumber").should("be.visible").type(studentsRandom);
+    cy.get("#reportYourPractice").should("be.visible").type(textolongo);
 
     //upload de Arquivo
-    cy.get('input[type="file"]', { timeout: 30000 }).attachFile(Foto_teste);
-    cy.contains("Foto_teste.jpg", { timeout: 30000 }).should("be.visible");
+    cy.get('input[type="file"]').attachFile(Foto_teste);
+    cy.contains("Foto_teste.jpg").should("be.visible");
     cy.wait(1000);
-    cy.get('.mt-0', { timeout: 30000 }).click();
+    cy.get('.mt-0').should("be.visible").click();
     cy.get('body').then($body => {
       if ($body.find('.active > .container-lg > .mx-auto > .br-modal > .container-fluid').length > 0) {
         cy.get('.active > .container-lg > .mx-auto > .br-modal > .container-fluid').should('be.visible');
@@ -67,15 +74,15 @@ describe("Praticas", () => {
       let textocurto = "Automação - " + faker.lorem.words(2);
       let textolongo = faker.lorem.paragraphs(1);
       
-        cy.get(".header-menu > .br-button > .fas").click(); // menu amburguer
-        cy.get('.align-items-center > [href="/conexao/praticas"]').click(); //botão para acessar pagina de praticas
-        cy.contains("Conte como foi realizar a atividade de Educação para o Trânsito integrada aos saberes escolares, do Programa Conexão DNIT. Compartilhe suas experiências para motivar e conectar mais colegas nessa rede de educação para a vida!", { timeout: 30000 }).should("be.visible");
+        cy.get(".header-menu > .br-button > .fas").should("be.visible").click(); // menu amburguer
+        cy.get(':nth-child(7) > #\\35 7').should("exist").click(); //botão para acessar pagina de praticas
+        cy.contains("Conte como foi realizar a atividade de Educação para o Trânsito integrada aos saberes escolares, do Programa Conexão DNIT. Compartilhe suas experiências para motivar e conectar mais colegas nessa rede de educação para a vida!").should("be.visible");
   
-        cy.get(':nth-child(1) > :nth-child(6) > .tooltip-container > .br-button', { timeout: 30000 }).click();
+        cy.get(':nth-child(1) > :nth-child(6) > .tooltip-container > .br-button').should("be.visible").click();
   
-        cy.get("#curriculumContent", { timeout: 30000 }).clear();
+        cy.get("#curriculumContent").should("be.visible").clear();
   
-        cy.get("#curriculumContent", { timeout: 30000 }).type("Edição -" + textocurto);
+        cy.get("#curriculumContent").should("be.visible").type("Edição -" + textocurto);
   
 
         
@@ -84,13 +91,13 @@ describe("Praticas", () => {
   
         cy.contains("Foto_teste.jpg").should("be.visible");
     
-        cy.get(".row > :nth-child(2) > .br-button", { timeout: 30000 }).click();
+        cy.get(".row > :nth-child(2) > .br-button").should("be.visible").click();
         // Verifica se o modal aparece
-        cy.get(".br-scrim:nth-child(7) .container-fluid", { timeout: 30000 }).should("be.visible").then(($modal) => {
+        cy.get(".br-scrim:nth-child(7) .container-fluid").should("be.visible").then(($modal) => {
             if ($modal.length) {
               // Se o modal aparecer, clique no botão "Sim"
     
-              cy.get('[style="display: flex; justify-content: center;"] > .secondary').click();
+              cy.get('[style="display: flex; justify-content: center;"] > .secondary').should("be.visible").click();
         
               cy.log("Modal encontrado e botão clicado.");
             } else {
@@ -102,50 +109,44 @@ describe("Praticas", () => {
   it("pratica repetida", () => {
         let textocurto = "Automação - " + faker.lorem.words(2);
         let textolongo = faker.lorem.paragraphs(1);
-        cy.get(".header-menu > .br-button > .fas", { timeout: 30000 }).click();
-        cy.get('.align-items-center > [href="/conexao/praticas"]', { timeout: 30000 }).click();
-  
+        cy.get(".header-menu > .br-button > .fas").click();
+        cy.wait(1000);
+        cy.get(':nth-child(7) > #\\35 7').should("be.visible").click();
         cy.contains("Conte como foi realizar a atividade de Educação para o Trânsito integrada aos saberes escolares, do Programa Conexão DNIT. Compartilhe suas experiências para motivar e conectar mais colegas nessa rede de educação para a vida!").should("be.visible");
-        cy.get('[href="/conexao/praticas/enviar"]:nth-child(1)', { timeout: 30000 }).click();
-  
-        cy.get(".br-checkbox > label").click();
-  
-        cy.get(":nth-child(2) > .medium > #year > .br-input > .br-button > .fas", { timeout: 30000 }).click();
-  
-        cy.get(`#year > .br-list > :nth-child(1) > .br-radio > label`, { timeout: 30000 }).click();
-  
-        cy.get("#curricularComponent > .br-input > .br-button > .fas", { timeout: 30000 }).click();
-  
-        cy.get(`#curricularComponent > .br-list > :nth-child(1) > .br-radio > label`, { timeout: 30000 }).click();
+        cy.get('[href="/conexao/praticas/enviar"]:nth-child(1)').should("exist").click();
+        cy.get(".br-checkbox > label").should("be.visible").click();
+        cy.get(":nth-child(2) > .medium > #year > .br-input > .br-button > .fas").should("be.visible").click();
+        cy.get("#year > .br-list > :nth-child(1) > .br-radio > label").should("exist").click();
+        cy.get("#curricularComponent > .br-input > .br-button > .fas").should("be.visible").click();
+        cy.get("#curricularComponent > .br-list > :nth-child(1) > .br-radio > label").should("be.visible").click();
         cy.wait(1000);
-        cy.get(':nth-child(4) > .medium > #year > .br-input > .br-button > .fas', { timeout: 30000 }).click();
-  
-        cy.get(':nth-child(4) > .medium > #year > .br-list > :nth-child(1) > .br-radio > label', { timeout: 30000 }).click()
-  
-        cy.get("#curriculumContent", { timeout: 30000 }).type(textocurto);
-  
-        cy.get("#dateOfCompletion", { timeout: 30000 }).click();
-  
-        cy.get(dataSelector).click();
-  
-        cy.get("#studentsNumber", { timeout: 30000 }).type(studentsRandom);
-  
-        cy.get("#reportYourPractice", { timeout: 30000 }).type(textolongo);
-  
+        cy.get(':nth-child(4) > .medium > #year > .br-input > .br-button > .fas').should("be.visible").click();
+        cy.get(':nth-child(4) > .medium > #year > .br-list > :nth-child(1) > .br-radio > label').should("be.visible").click()
+        cy.get("#curriculumContent").type(textocurto);
+        cy.get("#dateOfCompletion").should("be.visible").click();
+        cy.get(dataSelector).should("be.visible").click();
+        cy.get("#studentsNumber").type(studentsRandom);
+        cy.get("#reportYourPractice").type(textolongo);
 
-        //upload de Arquivo
-        cy.get('input[type="file"]', { timeout: 30000 }).attachFile(Foto_teste);
+        // Upload de Arquivo
+        cy.get('input[type="file"]').attachFile(Foto_teste);
   
-        cy.contains("Foto_teste.jpg", { timeout: 30000 }).should("be.visible");
-        cy.wait(1000);
-        cy.get('.mt-0', { timeout: 30000 }).click();
-  
-        cy.get('.active > .container-lg > .mx-auto > .br-modal > .container-fluid').then($modal => {
-           if ($modal.is(':visible')) { 
-            // Se o modal aparecer, clica no botão "Sim"
-              cy.get('#closeModalAccepted').click();
-            };
-      }); 
+        cy.contains("Foto_teste.jpg").should("be.visible");
+    
+        cy.get(".row > :nth-child(2) > .br-button").should("be.visible").click();
+        // Verifica se o modal aparece
+        cy.get(".br-scrim:nth-child(7) .container-fluid").should("be.visible").then(($modal) => {
+            if ($modal.length) {
+              // Se o modal aparecer, clique no botão "Sim"
+    
+              cy.get('[style="display: flex; justify-content: center;"] > .secondary').should("be.visible").click();
+        
+              cy.log("Modal encontrado e botão clicado.");
+            } else {
+              // Se o modal não aparecer, continua o fluxo normalmente
+              cy.log("Modal não encontrado, continuando com o teste.");
+            }
+          });
     });
   });
   
