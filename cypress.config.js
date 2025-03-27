@@ -4,9 +4,12 @@ const fs = require("fs");
 module.exports = defineConfig({
   projectId: "e97tc3",
   defaultCommandTimeout: 50000, // Define o tempo limite padrão para 50 segundos
-  browser: "chrome",
-  
+  responseTimeout: 10000, // Define timeout para respostas de requisições
+  requestTimeout: 5000, // Tempo máximo de espera por requisições
+  animationDistanceThreshold: 5, // Faz Cypress ignorar pequenas animações
+    
   e2e: {
+    slowTestThreshold: 2000, // Define quando um teste será considerado "lento"
     setupNodeEvents(on, config) {
       config.editor = "code"; // Define VS Code como editor padrão
       
@@ -38,5 +41,6 @@ module.exports = defineConfig({
     },
 
     downloadsFolder: "cypress/downloads", // Define a pasta de downloads
+    browser: "chrome", // Define o navegador aqui dentro
   },
 });
