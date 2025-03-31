@@ -5,7 +5,7 @@ describe("Iniciativas", () => {
   const textocurto = "Automação - " + faker.lorem.words(2);
   const textolongo = faker.lorem.paragraphs(1);
   beforeEach(() => {
-    cy.viewport(1920, 1080);FDD
+    cy.viewport(1920, 1080);
     cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao"); // Acesse a página antes de setar o localStorage
     
     cy.setLocalStorage();
@@ -17,16 +17,16 @@ describe("Iniciativas", () => {
     cy.window().its("localStorage.user").should("exist");
     cy.wait(1000);
   });
-  it.only("Cadastrar iniciativas", () => {
+  it("Cadastrar iniciativas", () => {
     cy.get("#Iniciativas svg").click();
     cy.get('[href="/conexao/iniciativas/enviar"]:nth-child(1)').click();
     cy.get("#title").type(textocurto);
-    cy.get("#year .fas").click();
-    cy.get("#year .br-item:nth-child(1) label").click();
-    cy.get("#idDiscipline .fas").click();
-    cy.get("#idDiscipline .br-item:nth-child(1) label").click();
-    cy.get("#trafficApproach .fas").click();
-    cy.get("#trafficApproach .br-item:nth-child(1) label").click();
+    cy.get("#year .fas").should("exist").click();
+    cy.get("#year .br-item:nth-child(1) label").should("exist").click();
+    cy.get("#idDiscipline .fas").should("exist").click();
+    cy.get("#idDiscipline .br-item:nth-child(1) label").should("exist").click();
+    cy.get("#trafficApproach .fas").should("exist").click();
+    cy.get("#trafficApproach .br-item:nth-child(1) label").should("exist").click();
     cy.get("#description").type(textolongo);
     
     //upload de Arquivo
@@ -44,10 +44,10 @@ describe("Iniciativas", () => {
   });
   it("Editar Iniciativa", () => {
     cy.get("#Iniciativas svg").click();
-    cy.get(":nth-child(1) > :nth-child(5) > .tooltip-container > .br-button > .fas").click();
+    cy.get(":nth-child(1) > :nth-child(5) > .tooltip-container > .br-button > .fas").should("exist").click();
     cy.get("#title").clear();
     cy.get("#title").type("Edição " + textocurto);
-    cy.get(".mt-0").click();
+    cy.get(".mt-0").should("exist").click();
     cy.contains(textocurto).should("be.visible");
     cy.contains(textocurto).click();
     cy.contains(textocurto).should("be.visible");

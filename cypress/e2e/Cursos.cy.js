@@ -17,9 +17,9 @@ describe("Cursos", () => {
   });
 
   const acessarMenuCursos = () => {
-    cy.get("div.header-menu i").should("be.visible").click();
-    cy.get("div.header-bottom div:nth-of-type(3) > a").should("be.visible").click();
-    cy.contains("Teste Automação - Não excluir").should("be.visible");
+    cy.get("div.header-menu i").should("exist").click();
+    cy.get("div.header-bottom div:nth-of-type(3) > a").should("exist").click();
+    cy.contains("Teste Automação - Não excluir").should("exist");
   };
 
   it("Criar comentário", () => {

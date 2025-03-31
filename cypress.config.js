@@ -3,17 +3,17 @@ const fs = require("fs");
 
 module.exports = defineConfig({
   projectId: "e97tc3",
-  defaultCommandTimeout: 50000, // Define o tempo limite padrão para 50 segundos
-  responseTimeout: 10000, // Define timeout para respostas de requisições
+  defaultCommandTimeout: 50000, // Aumenta o tempo limite padrão para comandos
+  responseTimeout: 10000, // Timeout para respostas de requisições
   requestTimeout: 5000, // Tempo máximo de espera por requisições
-  animationDistanceThreshold: 5, // Faz Cypress ignorar pequenas animações
-    
+  animationDistanceThreshold: 5, // Ignora pequenas animações para evitar falsos negativos
+
   e2e: {
-    slowMo: 500,
+    slowMo: 500, // Torna os testes ligeiramente mais lentos para melhor visibilidade
     setupNodeEvents(on, config) {
       config.editor = "code"; // Define VS Code como editor padrão
-      
-      // Adiciona tarefas personalizadas
+
+      // Adiciona tarefas personalizadas para manipulação de arquivos
       on("task", {
         fileExists(filePath) {
           return fs.existsSync(filePath); // Verifica se o arquivo existe
@@ -30,17 +30,20 @@ module.exports = defineConfig({
       return config;
     },
 
-    video: true, // Habilita gravação de vídeo dos testes
-    reporter: "mochawesome",
+    video: true, // Habilita gravação de vídeos dos testes
+    videoCompression: 32, // Reduz o tamanho do vídeo sem perder qualidade
+
+    reporter: "mochawesome", // Define Mochawesome como gerador de relatórios
     reporterOptions: {
-      reportDir: "cypress/results",
-      overwrite: false,
-      html: true,
-      json: false,
-      timestamp: "mmddyyyy_HHMMss",
+      reportDir: "cypress/reports", // Pasta onde os relatórios serão salvos
+      overwrite: true, // Permite sobrescrever relatórios antigos
+      html: true, // Gera relatório em HTML
+      json: true, // Gera relatório em JSON
+      autoOpen: true, // Abre o relatório automaticamente após os testes
+      charts: true, // Adiciona gráficos ao relatório
     },
 
+    screenshotsFolder: "cypress/reports/screenshots", // Define a pasta de screenshots
     downloadsFolder: "cypress/downloads", // Define a pasta de downloads
-    browser: "chrome", // Define o navegador aqui dentro
   },
 });

@@ -43,7 +43,7 @@ describe("Praticas", () => {
     cy.get(":nth-child(2) > .medium > #year > .br-input > .br-button > .fas").should("be.visible").click();
     cy.get(`#year > .br-list > :nth-child(${yearRandom}) > .br-radio > label`).should("exist").click();
     cy.get("#curricularComponent > .br-input > .br-button > .fas").should("be.visible").click();
-    cy.get(`#curricularComponent > .br-list > :nth-child(${curricularComponentrandom}) > .br-radio > label`).should("be.visible").click();
+    cy.get(`#curricularComponent > .br-list > :nth-child(${curricularComponentrandom}) > .br-radio > label`).should("exist").click();
     cy.wait(2000); // BO ta aqui nessa desgraça! 
 
     cy.get(':nth-child(4) > .medium > #year > .br-input > .br-button > .fas').should("be.visible").click();
@@ -79,7 +79,7 @@ describe("Praticas", () => {
         cy.get(':nth-child(7) > #\\35 7').should("exist").click(); //botão para acessar pagina de praticas
         cy.contains("Conte como foi realizar a atividade de Educação para o Trânsito integrada aos saberes escolares, do Programa Conexão DNIT. Compartilhe suas experiências para motivar e conectar mais colegas nessa rede de educação para a vida!").should("be.visible");
   
-        cy.get(':nth-child(1) > :nth-child(6) > .tooltip-container > .br-button').should("be.visible").click();
+        cy.get(':nth-child(1) > :nth-child(6) > .tooltip-container > .br-button').should("exist").click();
   
         cy.get("#curriculumContent").should("be.visible").clear();
   

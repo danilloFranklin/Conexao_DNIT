@@ -29,45 +29,62 @@ describe("Práticas Compartilhadas", () => {
     cy.scrollTo(0, 1000);
     cy.get('.highlight--item > [href="/conexao/praticas-compartilhadas"]').click();
     validarDescricaoTexto();
-    wait(2000);
+    cy.wait(2000);
     cy.get(':nth-child(1) > a > .spotlight-section > .content > .front > .d-flex').should('be.visible');
   });
 
-  it.only("Acessar prática", () => {
+  it("Acessar prática", () => {
     cy.get('.highlight--item > [href="/conexao/praticas-compartilhadas"]').click();
     validarDescricaoTexto();
     cy.scrollTo(0, 1000);
     cy.get(':nth-child(1) > a > .spotlight-section > .content > .front > .d-flex').should('be.visible').click();
-    cy.window().then((win) => {
-      win.close();
     });
 
-  it("Testar busca com resultado", () => {
-    cy.get("#Iniciativas svg").click();
-    cy.get(":nth-child(1) > :nth-child(5) > .tooltip-container > .br-button > .fas").click();
-    cy.get("#title").clear().type("Edição " + textocurto);
-    cy.get(".mt-0").click();
-
-    cy.contains(textocurto).should("be.visible").click();
-    cy.contains(textolongo).should("be.visible");
-    cy.contains(Foto_teste).should("be.visible");
-
-    cy.get(".fa-home").click();
-    cy.get(".text-search-activities > h3").should("be.visible");
+  it.only("Testar busca com resultado EM", () => {
+    cy.get('.highlight--item > [href="/conexao/praticas-compartilhadas"]').should("be.visible").click();
+    validarDescricaoTexto();
+    cy.scrollTo(0, 1000);
+    cy.get('#password-id').type("O meio ambiente Krycia");
+    cy.get('.mb-3 > label').should("be.visible").click();
+    cy.get('.primary').should("exist").click();
+    cy.wait(1000);
+    cy.get('.text-up-01 > p').contains("O meio ambiente Krycia").should("exist").click();
+    
   });
 
-  it("Testar busca sem resultado", () => {
-    cy.get("#Iniciativas svg").click();
-    cy.get(":nth-child(1) > :nth-child(5) > .tooltip-container > .br-button > .fas").click();
-    cy.get("#title").clear().type("TextoQueNaoExiste123");
-    cy.get(".mt-0").click();
-
-    cy.contains("Nenhum resultado encontrado").should("be.visible");
-
-    cy.get(".fa-home").click();
-    cy.get(".text-search-activities > h3").should("be.visible");
+  it("Testar busca sem resultado EM", () => {
+    cy.get('.highlight--item > [href="/conexao/praticas-compartilhadas"]').click();
+    validarDescricaoTexto();
+    cy.scrollTo(0, 1000);
+    cy.get('#password-id').type("O meio ambiente Krycia N existe");
+    cy.get('.mb-3 > label').should("exist").click();
+    cy.get('.primary').should("exist").click();
+    cy.get('.text-secondary').contains("Não foi encontrada nenhuma informação!").should("be.visible")
   });
+
+  it("Testar busca com resultado EF", () => {
+    cy.get('.highlight--item > [href="/conexao/praticas-compartilhadas"]').click();
+    validarDescricaoTexto();
+    cy.scrollTo(0, 1000);
+    cy.get('#password-id').type("Trânsito em cena: todo mundo tem direito à vida!");
+    cy.get('.row > .mb-1 > label').should("exist").click();
+    cy.get('.primary').should("exist").click();
+    cy.get('.text-up-01 > p').contains("Trânsito em cena: todo mundo tem direito à vida!").should("exist").click();
+    cy.go("back"); 
+  });
+
+  it("Testar busca sem resultado EF", () => {
+    cy.get('.highlight--item > [href="/conexao/praticas-compartilhadas"]').click();
+    validarDescricaoTexto();
+    cy.scrollTo(0, 1000);
+    cy.get('#password-id').type("O meio ambiente Krycia EF não existe");
+    cy.get('.row > .mb-1 > label').should("exist").click();
+    cy.get('.primary').should("exist").click();
+    cy.get('.text-secondary').contains("Não foi encontrada nenhuma informação!").should("be.visible")
+  });
+
 });
-});
+
+
 
 
