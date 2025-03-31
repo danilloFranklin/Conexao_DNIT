@@ -6,8 +6,8 @@ describe("Cursos", () => {
   const textoAleatorio = faker.lorem.sentence();
 
   beforeEach(() => {
-    cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao");
     cy.viewport(1920, 1080);
+    cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao");
     cy.setLocalStorage();
     cy.reload();
 
@@ -61,7 +61,7 @@ describe("Cursos", () => {
 
   it("Acessar Curso", () => {
     acessarMenuCursos();
-    cy.wait();
+    cy.wait(1000);
     cy.contains("Teste Automação - Não excluir").should("be.visible").click();
 
     // Remove o `target="_blank"` para abrir na mesma aba

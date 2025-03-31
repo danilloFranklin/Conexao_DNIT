@@ -14,8 +14,9 @@ describe("Práticas Compartilhadas", () => {
   }
 
   beforeEach(() => {
-    cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao");
     cy.viewport(1920, 1080);
+    cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao");
+    
     cy.setLocalStorage();
     cy.reload(); // Recarrega para aplicar o localStorage
 

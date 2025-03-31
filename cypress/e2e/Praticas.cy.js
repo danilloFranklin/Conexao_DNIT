@@ -13,8 +13,9 @@ export const dataSelector = `[aria-label="Mar\\E7o ${randomDay}, 2025"]`;
 
 describe("Praticas", () => {
   beforeEach(() => {
-    cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao"); // Acesse a página antes de setar o localStorage
     cy.viewport(1920, 1080);
+    cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao"); // Acesse a página antes de setar o localStorage
+
     cy.setLocalStorage();
     // Recarrega a página para aplicar os valores do localStorage
     cy.reload();

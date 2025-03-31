@@ -5,8 +5,9 @@ describe("Iniciativas", () => {
   const textocurto = "Automação - " + faker.lorem.words(2);
   const textolongo = faker.lorem.paragraphs(1);
   beforeEach(() => {
+    cy.viewport(1920, 1080);FDD
     cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao"); // Acesse a página antes de setar o localStorage
-    cy.viewport(1920, 1080);
+    
     cy.setLocalStorage();
     // Recarrega a página para aplicar os valores do localStorage
     cy.reload();
@@ -16,7 +17,7 @@ describe("Iniciativas", () => {
     cy.window().its("localStorage.user").should("exist");
     cy.wait(1000);
   });
-  it("Cadastrar iniciativas", () => {
+  it.only("Cadastrar iniciativas", () => {
     cy.get("#Iniciativas svg").click();
     cy.get('[href="/conexao/iniciativas/enviar"]:nth-child(1)').click();
     cy.get("#title").type(textocurto);
