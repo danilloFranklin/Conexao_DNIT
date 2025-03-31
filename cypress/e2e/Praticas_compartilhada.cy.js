@@ -14,7 +14,6 @@ describe("Práticas Compartilhadas", () => {
   }
 
   beforeEach(() => {
-    cy.viewport(1920, 1080);
     cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao");
     
     cy.setLocalStorage();
@@ -40,7 +39,7 @@ describe("Práticas Compartilhadas", () => {
     cy.get(':nth-child(1) > a > .spotlight-section > .content > .front > .d-flex').should('be.visible').click();
     });
 
-  it.only("Testar busca com resultado EM", () => {
+  it("Testar busca com resultado EM", () => {
     cy.get('.highlight--item > [href="/conexao/praticas-compartilhadas"]').should("be.visible").click();
     validarDescricaoTexto();
     cy.scrollTo(0, 1000);

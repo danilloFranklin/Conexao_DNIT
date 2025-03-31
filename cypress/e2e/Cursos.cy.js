@@ -6,7 +6,6 @@ describe("Cursos", () => {
   const textoAleatorio = faker.lorem.sentence();
 
   beforeEach(() => {
-    cy.viewport(1920, 1080);
     cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao");
     cy.setLocalStorage();
     cy.reload();

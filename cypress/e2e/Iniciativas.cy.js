@@ -5,7 +5,6 @@ describe("Iniciativas", () => {
   const textocurto = "Automação - " + faker.lorem.words(2);
   const textolongo = faker.lorem.paragraphs(1);
   beforeEach(() => {
-    cy.viewport(1920, 1080);
     cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao"); // Acesse a página antes de setar o localStorage
     
     cy.setLocalStorage();

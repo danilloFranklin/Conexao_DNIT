@@ -42,6 +42,9 @@ module.exports = defineConfig({
       autoOpen: true, // Abre o relatório automaticamente após os testes
       charts: true, // Adiciona gráficos ao relatório
     },
+  viewportWidth: 1920,  // Largura da janela
+  viewportHeight: 1080,  // Altura da janela
+
 
     screenshotsFolder: "cypress/reports/screenshots", // Define a pasta de screenshots
     downloadsFolder: "cypress/downloads", // Define a pasta de downloads
