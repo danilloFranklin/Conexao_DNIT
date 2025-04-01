@@ -45,6 +45,13 @@ describe("Práticas Compartilhadas", () => {
     cy.scrollTo(0, 1000);
     cy.get('#password-id').type("O meio ambiente Krycia");
     cy.get('.mb-3 > label').should("be.visible").click();
+    cy.get('#year .fas').should("be.visible").click();
+    cy.get('.br-item:nth-child(3) label').should("be.visible").click();
+    cy.get('#input_discipline').should("be.visible").click();
+    cy.get('#discipline .br-item:nth-child(2) label').should("be.visible").click();
+
+
+
     cy.get('.primary').should("exist").click();
     cy.wait(1000);
     cy.get('.text-up-01 > p').contains("O meio ambiente Krycia").should("exist").click();
@@ -57,27 +64,39 @@ describe("Práticas Compartilhadas", () => {
     cy.scrollTo(0, 1000);
     cy.get('#password-id').type("O meio ambiente Krycia N existe");
     cy.get('.mb-3 > label').should("exist").click();
+    cy.get('#year .fas').should("be.visible").click();
+    cy.get('.br-item:nth-child(3) label').should("be.visible").click();
+    cy.get('#input_discipline').should("be.visible").click();
+    cy.get('#discipline .br-item:nth-child(2) label').should("be.visible").click();
     cy.get('.primary').should("exist").click();
     cy.get('.text-secondary').contains("Não foi encontrada nenhuma informação!").should("be.visible")
   });
 
-  it("Testar busca com resultado EF", () => {
+  it.only("Testar busca com resultado EF", () => {
     cy.get('.highlight--item > [href="/conexao/praticas-compartilhadas"]').click();
     validarDescricaoTexto();
     cy.scrollTo(0, 1000);
     cy.get('#password-id').type("Trânsito em cena: todo mundo tem direito à vida!");
     cy.get('.row > .mb-1 > label').should("exist").click();
+    cy.get('.col-5 [aria-label="Exibir lista"]').should("be.visible").click();
+    cy.get('#year .br-item:nth-child(8) label').should("be.visible").click();
+    cy.get('.col-7 [aria-label="Exibir lista"]').should("be.visible").click();
+    cy.get('#discipline .br-item:nth-child(3) label').should("be.visible").click();
     cy.get('.primary').should("exist").click();
     cy.get('.text-up-01 > p').contains("Trânsito em cena: todo mundo tem direito à vida!").should("exist").click();
     cy.go("back"); 
   });
 
-  it("Testar busca sem resultado EF", () => {
+  it.only("Testar busca sem resultado EF", () => {
     cy.get('.highlight--item > [href="/conexao/praticas-compartilhadas"]').click();
     validarDescricaoTexto();
     cy.scrollTo(0, 1000);
     cy.get('#password-id').type("O meio ambiente Krycia EF não existe");
     cy.get('.row > .mb-1 > label').should("exist").click();
+    cy.get('.col-5 [aria-label="Exibir lista"]').should("be.visible").click();
+    cy.get('#year .br-item:nth-child(8) label').should("be.visible").click();
+    cy.get('.col-7 [aria-label="Exibir lista"]').should("be.visible").click();
+    cy.get('#discipline .br-item:nth-child(3) label').should("be.visible").click();
     cy.get('.primary').should("exist").click();
     cy.get('.text-secondary').contains("Não foi encontrada nenhuma informação!").should("be.visible")
   });

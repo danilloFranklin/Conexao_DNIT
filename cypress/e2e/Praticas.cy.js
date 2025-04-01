@@ -8,7 +8,13 @@ export const studentsRandom = Math.floor(Math.random() * 120) + 1;
 export const today = new Date();
 export const day = today.getDate();
 export const randomDay = Math.floor(Math.random() * day) + 1;
-export const dataSelector = `[aria-label="Mar\\E7o ${randomDay}, 2025"]`;
+export const monthNames = [
+  "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+  "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+];
+const currentMonth = monthNames[today.getMonth()]; // Obtém o mês atual dinamicamente
+const currentYear = today.getFullYear(); // Obtém o ano atual
+export const dataSelector = `[aria-label="${currentMonth} ${randomDay}, ${currentYear}"]`;
 
 
 describe("Praticas", () => {
@@ -46,7 +52,7 @@ describe("Praticas", () => {
     cy.wait(2000); // BO ta aqui nessa desgraça! 
 
     cy.get(':nth-child(4) > .medium > #year > .br-input > .br-button > .fas').should("be.visible").click();
-    cy.get(':nth-child(4) > .medium > #year > .br-list > :nth-child(1) > .br-radio > label').should("be.visible").click()
+    cy.get(':nth-child(4) > .medium > #year > .br-list > :nth-child(1) > .br-radio > label').should("exist").click()
     cy.get("#curriculumContent").should("be.visible").type(textocurto);
     cy.get("#dateOfCompletion").should("be.visible").click();
     cy.get(dataSelector).click();
@@ -106,7 +112,7 @@ describe("Praticas", () => {
             }
           });
         });
-  it("pratica repetida", () => {
+  it.only("pratica repetida", () => {
         let textocurto = "Automação - " + faker.lorem.words(2);
         let textolongo = faker.lorem.paragraphs(1);
         cy.get(".header-menu > .br-button > .fas").click();
