@@ -72,7 +72,7 @@ describe("Práticas Compartilhadas", () => {
     cy.get('.text-secondary').contains("Não foi encontrada nenhuma informação!").should("be.visible")
   });
 
-  it.only("Testar busca com resultado EF", () => {
+  it("Testar busca com resultado EF", () => {
     cy.get('.highlight--item > [href="/conexao/praticas-compartilhadas"]').click();
     validarDescricaoTexto();
     cy.scrollTo(0, 1000);
@@ -87,7 +87,7 @@ describe("Práticas Compartilhadas", () => {
     cy.go("back"); 
   });
 
-  it.only("Testar busca sem resultado EF", () => {
+  it("Testar busca sem resultado EF", () => {
     cy.get('.highlight--item > [href="/conexao/praticas-compartilhadas"]').click();
     validarDescricaoTexto();
     cy.scrollTo(0, 1000);
