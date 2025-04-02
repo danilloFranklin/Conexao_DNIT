@@ -55,7 +55,7 @@ describe("Mensagens", () => {
   it("Envio Reclamação", () => enviarMensagem(5));
   it("Envio de Elogio", () => enviarMensagem(6));
 
-  it.only('Envio de Comunicação Interna', () => {
+  it('Envio de Comunicação Interna', () => {
     let textocurto = "Automação - " + faker.lorem.words(2);
     let textolongo = faker.lorem.paragraphs(1);
     cy.get(".header-menu > .br-button > .fas").should('be.visible').click();
