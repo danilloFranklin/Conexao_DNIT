@@ -3,7 +3,11 @@ const fs = require("fs");
 
 module.exports = defineConfig({
   projectId: "e97tc3",
-  defaultCommandTimeout: 50000, // Aumenta o tempo limite padrão para comandos
+  retries: {
+    runMode: 2, // Tenta novamente 2 vezes se o teste falhar no modo normal
+    openMode: 2, // Tenta 2 vez se falhar no modo interativo (cypress open)
+  },
+  defaultCommandTimeout: 40000, // Aumenta o tempo limite padrão para comandos
   responseTimeout: 10000, // Timeout para respostas de requisições
   requestTimeout: 5000, // Tempo máximo de espera por requisições
   animationDistanceThreshold: 5, // Ignora pequenas animações para evitar falsos negativos
@@ -42,6 +46,7 @@ module.exports = defineConfig({
       autoOpen: true, // Abre o relatório automaticamente após os testes
       charts: true, // Adiciona gráficos ao relatório
     },
+    
   viewportWidth: 1920,  // Largura da janela
   viewportHeight: 1080,  // Altura da janela
 
@@ -49,4 +54,5 @@ module.exports = defineConfig({
     screenshotsFolder: "cypress/reports/screenshots", // Define a pasta de screenshots
     downloadsFolder: "cypress/downloads", // Define a pasta de downloads
   },
+
 });

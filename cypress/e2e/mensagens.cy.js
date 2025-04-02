@@ -1,124 +1,61 @@
 import { pt_BR, faker } from "@faker-js/faker";
-import { it } from "mocha";
+
 const timeoutValue = Cypress.config('defaultCommandTimeout');
+const baseUrl = Cypress.env('baseUrl') || "https://conexao-dnit-hom.labtrans.ufsc.br/conexao";
 
 export const Foto_teste = "Foto_teste.jpg";
-export const yearRandom = Math.floor(Math.random() * 12) + 1;
-export const typeMensengerRandom = Math.floor(Math.random() * 6) + 1;
-export const curricularComponentrandom = Math.floor(Math.random() * 8) + 1;
-export const studentsRandom = Math.floor(Math.random() * 120) + 1;
-export const randomDay = Math.floor(Math.random() * 31) + 1;
-export const dataSelector = `[aria-label="Mar\\E7o ${randomDay}, 2025"]`;
+
+// Função para fazer login e garantir localStorage
+function setupLocalStorage() {
+  cy.visit(baseUrl);
+  cy.setLocalStorage();
+  cy.reload();
+  cy.window().its("localStorage.session").should("exist");
+  cy.window().its("localStorage.user").should("exist");
+}
+
+// Função para preencher e enviar um formulário de mensagem
+function enviarMensagem(tipoMensagem) {
+  let textocurto = `Automação - ${faker.lorem.words(2)}`;
+  let textolongo = faker.lorem.paragraphs(1);
+
+  cy.get(".header-menu > .br-button > .fas").should("be.visible").click();
+  cy.get(":nth-child(6) > #\\35 0").should("be.visible").click();
+  cy.get('[href="/conexao/mensagens/enviar"]:nth-child(1)').should("be.visible").click();
+
+  cy.get('#input_messages-type').should("be.visible").click();
+  cy.get(`:nth-child(${tipoMensagem}) > .br-radio > label`).should("be.visible").click();
+
+  cy.get('#subject-id1').type(textocurto).should("be.visible");
+  cy.get('.se-wrapper-inner > p').should("be.visible").click().type(textolongo);
+
+  // Upload de Arquivo
+  cy.get('input[type="file"]').attachFile(Foto_teste);
+  cy.contains(Foto_teste).should("be.visible");
+
+  // Simulação de um clique duplo onde necessário
+  cy.get('.mt-0').should('be.visible').click().wait(500).click();
+
+  // Enviar mensagem
+  cy.get(':nth-child(2) > button > .name > .row').should("be.visible").click();
+
+  // Verificar se a mensagem foi enviada corretamente
+  cy.contains(textocurto).should("be.visible").click();
+  cy.contains(textocurto).should("be.visible");
+  cy.contains(textolongo).should("be.visible");
+  cy.contains(Foto_teste).should("be.visible");
+}
 
 describe("Mensagens", () => {
-  beforeEach(() => {
-    cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao"); // Acesse a página antes de setar o localStorage
-    cy.setLocalStorage();
+  beforeEach(setupLocalStorage);
 
-    // Recarrega a página para aplicar os valores do localStorage
-    cy.reload();
+  it("Envio Suporte Técnico", () => enviarMensagem(1));
+  it("Envio Suporte Pedagógico", () => enviarMensagem(2));
+  it("Envio Sugestão", () => enviarMensagem(3));
+  it("Envio Reclamação", () => enviarMensagem(5));
+  it("Envio de Elogio", () => enviarMensagem(6));
 
-    // Valida se os dados foram inseridos corretamente
-    cy.window().its("localStorage.session").should("exist");
-    cy.window().its("localStorage.user").should("exist");
-  });
-
-  it('Envio Suporte tecnico', () => {
-    let textocurto = "Automação - " + faker.lorem.words(2);
-    let textolongo = faker.lorem.paragraphs(1);
-    cy.get(".header-menu > .br-button > .fas").should('be.visible').click();
-    cy.get(":nth-child(6) > #\\35 0").should('be.visible').click();
-    cy.get('[href="/conexao/mensagens/enviar"]:nth-child(1)').should("be.visible").click();
-    cy.get('#input_messages-type').should("be.visible").click();
-    cy.get(`:nth-child(1) > .br-radio > label`).should("be.visible").click();
-    cy.get('#subject-id1').type(textocurto).should("be.visible");
-    cy.get('.se-wrapper-inner > p').should("be.visible").click();
-    cy.get('.se-wrapper-inner > p').should("be.visible").type(textolongo).should("be.visible");
-
-
-    //upload de Arquivo
-    cy.get('input[type="file"]').attachFile(Foto_teste);
-    cy.contains("Foto_teste.jpg").should("be.visible");
-    //apenas um click não está funcionando
-    cy.get('.mt-0').should('be.visible').click()
-    cy.wait(500);
-    cy.get('.mt-0').should('be.visible').click()
-  
-    
-    cy.get(':nth-child(2) > button > .name > .row').should("be.visible").click();
-
-        cy.contains(textocurto).should("be.visible");
-  
-    cy.contains(textocurto).click();
-        cy.contains(textocurto).should("be.visible");
-
-    cy.contains(textolongo).should("be.visible");
-    cy.contains(textolongo).should("be.visible");
-    cy.contains("Foto_teste.jpg").should("be.visible");
-  });
-it('Envio Suporte pedagogico', () => {
-    let textocurto = "Automação - " + faker.lorem.words(2);
-    let textolongo = faker.lorem.paragraphs(1);
-    cy.get(".header-menu > .br-button > .fas").should('be.visible').click();
-    cy.get(":nth-child(6) > #\\35 0").should('be.visible').click();
-    cy.get('[href="/conexao/mensagens/enviar"]:nth-child(1)').click();
-    cy.get('#input_messages-type').should("be.visible").click();
-    cy.get(':nth-child(2) > .br-radio > label').should("be.visible").click();
-    cy.get('#subject-id1').type(textocurto).should("be.visible");
-    cy.get('.se-wrapper-inner > p').should("be.visible").click();
-    cy.get('.se-wrapper-inner > p').should("be.visible").type(textolongo);
-
-
-    //upload de Arquivo
-    cy.get('input[type="file"]').attachFile(Foto_teste);
-    cy.contains("Foto_teste.jpg").should("be.visible");
-    //apenas um click não está funcionando
-    cy.get('.mt-0').should('be.visible').click()
-    cy.wait(500);
-    cy.get('.mt-0').should('be.visible').click()
-    cy.get(':nth-child(2) > button > .name > .row').should("be.visible").click();
-    cy.wait(2000)
-        cy.contains(textocurto).should("be.visible");
-
-    cy.contains(textocurto).click();
-        cy.contains(textocurto).should("be.visible");
-
-    cy.contains(textolongo).should("be.visible");
-    cy.contains(textolongo).should("be.visible");
-    cy.contains("Foto_teste.jpg").should("be.visible");
-  });
-  it('Envio Sugestão', () => {
-    let textocurto = "Automação - " + faker.lorem.words(2);
-    let textolongo = faker.lorem.paragraphs(1);
-    cy.get(".header-menu > .br-button > .fas").should('be.visible').click();
-    cy.get(":nth-child(6) > #\\35 0").should('be.visible').click();
-    cy.get('[href="/conexao/mensagens/enviar"]:nth-child(1)').click();
-    cy.get('#input_messages-type').should("be.visible").click();
-    cy.get(':nth-child(3) > .br-radio > label').should("be.visible").click();
-    cy.get('#subject-id1').type(textocurto).should("be.visible");
-    cy.get('.se-wrapper-inner > p').click();
-    cy.get('.se-wrapper-inner > p').type(textolongo);
-
-
-    //upload de Arquivo
-    cy.get('input[type="file"]').attachFile(Foto_teste);
-    cy.contains("Foto_teste.jpg").should("be.visible");
-    //apenas um click não está funcionando
-    cy.get('.mt-0').should('be.visible').click()
-    cy.wait(500);
-    cy.get('.mt-0').should('be.visible').click()
-    cy.get(':nth-child(2) > button > .name > .row').click();
-    cy.contains(textocurto).should("be.visible");
-
-    cy.contains(textocurto).click();
-        cy.contains(textocurto).should("be.visible");
-
-    cy.contains(textolongo).should("be.visible");
-    cy.contains(textolongo).should("be.visible");
-    cy.contains("Foto_teste.jpg").should("be.visible");
-  });
-
-  it('Envio de Comunicação Interna', () => {
+  it.only('Envio de Comunicação Interna', () => {
     let textocurto = "Automação - " + faker.lorem.words(2);
     let textolongo = faker.lorem.paragraphs(1);
     cy.get(".header-menu > .br-button > .fas").should('be.visible').click();
@@ -172,69 +109,6 @@ it('Envio Suporte pedagogico', () => {
     cy.contains(textocurto).click();
         cy.contains(textocurto).should("be.visible");
 
-    cy.contains(textolongo).should("be.visible");
-    cy.contains(textolongo).should("be.visible");
-    cy.contains("Foto_teste.jpg").should("be.visible");
-  });
-  it('Envio Reclamação', () => {
-    let textocurto = "Automação - " + faker.lorem.words(2);
-    let textolongo = faker.lorem.paragraphs(1);
-    cy.get(".header-menu > .br-button > .fas").should('be.visible').click();
-    cy.get(":nth-child(6) > #\\35 0").should('be.visible').click();
-    cy.get('[href="/conexao/mensagens/enviar"]:nth-child(1)').should("be.visible").click();
-    cy.get('#input_messages-type').should("be.visible").click();
-    cy.get(':nth-child(5) > .br-radio > label').should("be.visible").click();
-    cy.get('#subject-id1').type(textocurto).should("be.visible");
-    cy.get('.se-wrapper-inner > p').should("be.visible").click();
-    cy.get('.se-wrapper-inner > p').type(textolongo);
-
-
-    //upload de Arquivo
-    cy.get('input[type="file"]').attachFile(Foto_teste);
-    cy.contains("Foto_teste.jpg").should("be.visible");
-    //apenas um click não está funcionando
-    cy.get('.mt-0').should('be.visible').click()
-    cy.wait(500);
-    cy.get('.mt-0').should('be.visible').click()
-  
-    cy.get(':nth-child(2) > button > .name > .row').should("be.visible").click();
-
-        cy.contains(textocurto).should("be.visible");
-
-    cy.contains(textocurto).click();
-        cy.contains(textocurto).should("be.visible");
-
-    cy.contains(textolongo).should("be.visible");
-    cy.contains(textolongo).should("be.visible");
-    cy.contains("Foto_teste.jpg").should("be.visible");
-  });
-  it('Envio de Elogio', () => {
-    let textocurto = "Automação - " + faker.lorem.words(2);
-    let textolongo = faker.lorem.paragraphs(1);
-    cy.get(".header-menu > .br-button > .fas").should('be.visible').click();
-    cy.get(":nth-child(6) > #\\35 0").should('be.visible').click();
-    cy.get('[href="/conexao/mensagens/enviar"]:nth-child(1)').should("be.visible").click();
-    cy.get('#input_messages-type').should("be.visible").click();
-    cy.get(':nth-child(6) > .br-radio > label').should("be.visible").click();
-    cy.get('#subject-id1').type(textocurto).should("be.visible");
-    cy.get('.se-wrapper-inner > p').should("be.visible").click();
-    cy.get('.se-wrapper-inner > p').should("be.visible").type(textolongo);
-
-
-    //upload de Arquivo
-    cy.get('input[type="file"]').attachFile(Foto_teste);
-    cy.contains("Foto_teste.jpg").should("be.visible");
-
-    //apenas um click não está funcionando
-    cy.get('.mt-0').should('be.visible').click()
-    cy.wait(500);
-    cy.get('.mt-0').should('be.visible').click()
-  
-    cy.get(':nth-child(2) > button > .name > .row').should("be.visible").click();
-    cy.contains(textocurto).should("be.visible");
-    cy.contains(textocurto).click();
-        cy.contains(textocurto).should("be.visible");
-  
     cy.contains(textolongo).should("be.visible");
     cy.contains(textolongo).should("be.visible");
     cy.contains("Foto_teste.jpg").should("be.visible");

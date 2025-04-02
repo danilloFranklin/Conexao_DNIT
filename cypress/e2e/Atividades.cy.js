@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 
-describe("Cursos", () => {
+describe("Atividades", () => {
   const fileName = "home.pdf"; // Nome do arquivo esperado
   const filePath = `cypress/downloads/${fileName}`;
   const textoAleatorio = faker.lorem.sentence();
@@ -37,7 +37,7 @@ cy.wait('@requests').then((interception) => {
     
   });
 
-  it.only("Buscar atividade do EM", () => {
+  it("Buscar atividade do EM", () => {
     cy.get("#highSchool > #highSchool").should("be.visible").click();
     cy.wait(1500);
     cy.get(".mt-4 .small:nth-child(1)").should("be.visible").click();
