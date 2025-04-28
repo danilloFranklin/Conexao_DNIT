@@ -1,8 +1,11 @@
 import { pt_BR, faker } from "@faker-js/faker";
+
+// Configurações iniciais
 const timeoutValue = Cypress.config('defaultCommandTimeout');
 const today = new Date();
 const textocurto = "Automação - " + faker.lorem.words(2);
 
+// Nomes dos meses
 const monthNames = [
   "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
   "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
@@ -25,24 +28,9 @@ if (futureMonthIndex > 11) {
 const futureMonth = monthNames[futureMonthIndex];
 
 // Gerando dia aleatório do mês atual
-const randomDay = Math.floor(Math.random() * (31 - today.getDate() + 1)) + today.getDate();
+const randomDay = Math.floor(Math.random() * (30 - today.getDate() + 1)) + today.getDate();
 
-// Gerando seletores de data de início e fim
-export const dataSelectorCurrentMonth = `[aria-label="${currentMonth} ${randomDay}, ${currentYear}"]`;
-export const dataSelectorFutureMonth = `[aria-label="${futureMonth} ${randomDay}, ${futureYear}"]`;
-
-// ===== NOVO BLOCO: Data aleatória entre os dois meses =====
-
-// 1º dia do mês atual
-const startDate = new Date(currentYear, currentMonthIndex, 1);
-// Último dia do mês dois meses depois
-const endDate = new Date(futureYear, futureMonthIndex + 1, 0); 
-
-// Gerando uma data aleatória entre startDate e endDate
-const randomTimestamp = startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime());
-const randomDate = new Date(randomTimestamp);
-
-// Formata para [aria-label="Mês Dia, Ano"]
+// Função para formatar para [aria-label="Mês Dia, Ano"]
 const formatDateSelector = (date) => {
   const day = date.getDate();
   const month = monthNames[date.getMonth()];
@@ -50,8 +38,34 @@ const formatDateSelector = (date) => {
   return `[aria-label="${month} ${day}, ${year}"]`;
 };
 
+// Função para formatar para "ddmmyyyy"
+const formatDateDigits = (date) => {
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}${month}${year}`;
+};
+
+// Gerando seletores de data
+export const dataSelectorCurrentMonth = `[aria-label="${currentMonth} ${randomDay}, ${currentYear}"]`;
+export const dataSelectorFutureMonth = `[aria-label="${futureMonth} ${randomDay}, ${futureYear}"]`;
+
+// Gerando datas aleatórias entre dois meses
+const startDate = new Date(currentYear, currentMonthIndex, 1);
+const endDate = new Date(futureYear, futureMonthIndex + 1, 0);
+
+const randomTimestamp = startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime());
+const randomDate = new Date(randomTimestamp);
+
+// Exports em [aria-label] e em números (ddmmyyyy)
 export const dataSelectorRandomBetween = formatDateSelector(randomDate);
-// ==========================================================
+export const digitsDateCurrentMonth = formatDateDigits(new Date(currentYear, currentMonthIndex, randomDay));
+export const digitsDateFutureMonth = formatDateDigits(new Date(futureYear, futureMonthIndex, randomDay));
+export const digitsDateRandomBetween = formatDateDigits(randomDate);
+
+
+
+// ================== TESTES ==================
 
 describe("Atividades", () => {
   const fileName = "home.pdf";
@@ -73,7 +87,7 @@ describe("Atividades", () => {
     cy.get('[href="/conexao/planejamento-pedagogico/novo"]:nth-child(1)').should("be.visible").click();
   });
 
-  it.only("cadastrar planejamento", () => {
+  it("Cadastrar planejamento", () => {
     cy.get('.align-items-center > [href="/conexao/planejamento-pedagogico"]').should("be.visible").click();
     cy.get('.table-title').contains("Meus planejamentos pedagógicos de atividades de educação para o trânsito");
     cy.get('[href="/conexao/planejamento-pedagogico/novo"]:nth-child(1)').should("be.visible").click();
@@ -83,23 +97,21 @@ describe("Atividades", () => {
     cy.get('.col-auto > .br-button').should("be.visible").click();
 
     cy.get('#planningTitle').type(textocurto);
-    cy.log("Dia de hoje é: ", randomDay);
 
     cy.scrollTo(0, 247);
     cy.get('.br-input > #From').first().click();
     cy.get(dataSelectorCurrentMonth).eq(0).click(); // Data de início
 
     cy.get('.br-input > #To').should("be.visible").click();
-    cy.get('.open .flatpickr-next-month .fas').click(); // Vai pro mês seguinte
-    cy.get('.open .flatpickr-next-month .fas').click(); // Vai pro segundo mês seguinte
+    cy.get('.open .flatpickr-next-month .fas').click(); // Vai para o próximo mês
+    cy.get('.open .flatpickr-next-month .fas').click(); // Vai para o segundo próximo mês
     cy.get(dataSelectorFutureMonth).eq(0).click(); // Data de fim
 
-    // 👉 Clicando na data aleatória entre início e fim
+    // 👉 Digitando data aleatória entre início e fim
+    cy.log("Data aleatória: " + digitsDateRandomBetween);
     cy.scrollTo(0, 444);
-    cy.get('#scheduledDate-6').click(); // ou qualquer outro campo necessário
-    cy.get('#scheduledDate-6').should("be.visible").click().type(dataSelectorRandomBetween);
+    cy.get('#scheduledDate-6').should("be.visible").click().type(digitsDateRandomBetween);
 
-    // cy.get('.col-auto > .primary').should("be.visible").click();
-    // cy.scrollTo(0, 555);
+    cy.get('.col-auto > .primary').should("be.visible").click();
   });
 });

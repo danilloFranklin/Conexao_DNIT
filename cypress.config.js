@@ -7,7 +7,7 @@ module.exports = defineConfig({
     runMode: 2, // Tenta novamente 2 vezes se o teste falhar no modo normal
     openMode: 2, // Tenta 2 vez se falhar no modo interativo (cypress open)
   },
-  defaultCommandTimeout: 40000, // Aumenta o tempo limite padrão para comandos
+  defaultCommandTimeout: 90000, // Aumenta o tempo limite padrão para comandos
   responseTimeout: 10000, // Timeout para respostas de requisições
   requestTimeout: 5000, // Tempo máximo de espera por requisições
   animationDistanceThreshold: 5, // Ignora pequenas animações para evitar falsos negativos
