@@ -34,7 +34,7 @@ function enviarMensagem(tipoMensagem) {
   cy.contains(Foto_teste).should("be.visible");
 
   // Simulação de um clique duplo onde necessário
-  cy.get('.mt-0').should('be.visible').click().wait(500).click();
+  cy.get('.mt-0').should('be.visible').click().wait(1000).click();
 
   // Enviar mensagem
   cy.get(':nth-child(2) > button > .name > .row').should("be.visible").click();

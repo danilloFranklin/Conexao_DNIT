@@ -26,6 +26,41 @@ describe("Perfil", () => {
 
   it("Acessar perfil", () => {
     cy.get('[href="/conexao/perfil"]').should("exist").click();
-    cy.contains("Danillo Franklin Leite Lopes")
+    cy.contains("Danillo Franklin Leite Lopes");
+});
+
+it("Alterar perfil professor", () => {
+  cy.get('[href="/conexao/perfil"]').should("exist").click();
+  cy.contains("Danillo Franklin Leite Lopes");
+  cy.wait(3000);
+  cy.get('#categories > .br-input > .br-button > .fas').click();
+  cy.contains('label', 'Professor').click();
+  cy.wait(500);
+  cy.get('.br-input:nth-child(1) > .br-select [aria-label="Exibir lista"]').click();
+  cy.get('.br-item:nth-child(13) label').should("exist").click();
+  cy.wait(1000)
+  cy.get('#input_city').click();
+  cy.get('.br-item label').contains('Bocaiúva', { matchCase: false }).click();
+  cy.get('#input_institution').click();
+  cy.get('#institution .br-item:nth-child(4) label').click();
+  cy.get('.mt-3').click();
+  cy.get('.row:nth-child(2) > div:nth-child(1) > .br-checkbox:nth-child(2) > label').click();
+  cy.get('.row:nth-child(2) > div:nth-child(2) > .br-checkbox:nth-child(2) > label').click();
+  cy.get('.mr-1:nth-child(2)').click();
+  cy.wait(2000);
+  cy.get('.active').click();
+
+
+});
+it("Alterar para perfil Equipe programa", () => {
+  cy.get('[href="/conexao/perfil"]').should("exist").click();
+  cy.wait(3000);
+  cy.get('input#input_categories').click();
+  cy.contains('label', 'Equipe do Programa').click();
+  cy.get('label[for="DNIT Sede"]').click();
+  cy.contains('button', 'Salvar').click();
+  cy.wait(2000);
+  cy.get('.active').click();
+
 });
 });
