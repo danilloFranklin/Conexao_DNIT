@@ -7,13 +7,13 @@ module.exports = defineConfig({
     runMode: 2, // Tenta novamente 2 vezes se o teste falhar no modo normal
     openMode: 2, // Tenta 2 vez se falhar no modo interativo (cypress open)
   },
-  defaultCommandTimeout: 90000, // Aumenta o tempo limite padrão para comandos
+  defaultCommandTimeout: 45000, // Aumenta o tempo limite padrão para comandos
   responseTimeout: 10000, // Timeout para respostas de requisições
   requestTimeout: 5000, // Tempo máximo de espera por requisições
   animationDistanceThreshold: 5, // Ignora pequenas animações para evitar falsos negativos
 
   e2e: {
-    slowMo: 500, // Torna os testes ligeiramente mais lentos para melhor visibilidade
+    slowMo: 1000, // Torna os testes ligeiramente mais lentos para melhor visibilidade
     setupNodeEvents(on, config) {
       config.editor = "code"; // Define VS Code como editor padrão
 
@@ -34,7 +34,7 @@ module.exports = defineConfig({
       return config;
     },
 
-    video: true, // Habilita gravação de vídeos dos testes
+    video: false, // Habilita gravação de vídeos dos testes
     videoCompression: 32, // Reduz o tamanho do vídeo sem perder qualidade
 
     reporter: "mochawesome", // Define Mochawesome como gerador de relatórios
@@ -43,7 +43,7 @@ module.exports = defineConfig({
       overwrite: true, // Permite sobrescrever relatórios antigos
       html: true, // Gera relatório em HTML
       json: true, // Gera relatório em JSON
-      autoOpen: true, // Abre o relatório automaticamente após os testes
+      autoOpen: false, // Abre o relatório automaticamente após os testes
       charts: true, // Adiciona gráficos ao relatório
     },
     

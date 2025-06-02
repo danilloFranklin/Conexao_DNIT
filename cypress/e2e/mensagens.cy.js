@@ -22,8 +22,10 @@ function enviarMensagem(tipoMensagem) {
   cy.get(".header-menu > .br-button > .fas").should("be.visible").click();
   cy.get(":nth-child(6) > #\\35 0").should("be.visible").click();
   cy.get('[href="/conexao/mensagens/enviar"]:nth-child(1)').should("be.visible").click();
+  cy.wait(15000)
+  cy.get(':nth-child(3) > :nth-child(3) > a > .br-button').should("be.visible").click();
 
-  cy.get('#input_messages-type').should("be.visible").click();
+  cy.get('.br-input > .br-button > .fas').click()
   cy.get(`:nth-child(${tipoMensagem}) > .br-radio > label`).should("be.visible").click();
 
   cy.get('#subject-id1').type(textocurto).should("be.visible");
@@ -62,23 +64,30 @@ describe("Mensagens", () => {
     cy.wait(500);
     cy.get(":nth-child(6) > #\\35 0").should('be.visible').click();
     cy.get('[href="/conexao/mensagens/enviar"]:nth-child(1)').should("be.visible").click();
-    cy.get('#input_messages-type').should("be.visible").click();
-    
+    cy.wait(1000)
+    cy.get(':nth-child(3) > :nth-child(3) > a > .br-button').should("be.visible").click();
+    cy.get('.br-input > .br-button > .fas').click()
     cy.get(':nth-child(4) > .br-radio > label').should("be.visible").click();
-    cy.get('#state > .br-input > .br-button').should("be.visible").click();
-    cy.get('#state > .br-list > .w-100 > .br-checkbox > label').should("be.visible").click();
-    cy.get('#__next').click();
+
+  cy.get('#state .fas').click();
+  cy.scrollTo(0, 200);
+  cy.get('#state .br-item:nth-child(14) label').should('exist').click();
+  cy.get('#state > .br-input > .br-button > .fas').click();
+    
     cy.wait(1000);
     cy.get('#cities > .br-input > .br-button > .fas').should("be.visible").click();
-    cy.wait(1000);
-    cy.get('#cities > .br-list > .w-100 > .br-checkbox > label').should("be.visible").click();
-    cy.get('#__next').click();
+    cy.get('input#input_cities').type("Bocaiúva");
+    cy.wait(5000);
+    cy.get('label[for*="cities_"]').click();
+    cy.get('div[id="cities"] i').click();
     cy.wait(2000);
-    cy.get('#input_institution').should("be.visible").click();
+    cy.get('div[id="institution"] i').click();
     cy.wait(1000);
-    cy.get('#institution > .br-list > .w-100 > .br-checkbox > label').should("be.visible").click();
-    cy.get('#__next').click();
-    cy.wait(2000);
+    cy.contains('label', 'Bully').eq(0).click();
+    cy.wait(1000);
+    cy.get('div[id="institution"] i').click();
+
+
     cy.get('#input_categories').should("be.visible").click();
     cy.wait(1000);
     cy.get('#categories > .br-list > .highlighted > .br-checkbox > label').should("be.visible").click();

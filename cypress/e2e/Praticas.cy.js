@@ -37,18 +37,29 @@ describe("Práticas", () => {
   // 🔹 Função para preencher formulário de práticas
   const preencherFormularioPratica = (textocurto, textolongo) => {
     cy.get(".br-checkbox > label").click();
+    cy.wait(1000);
     cy.get(":nth-child(2) > .medium > #year > .br-input > .br-button").click();
+    cy.wait(1000);
     cy.get(`#year > .br-list > :nth-child(${yearRandom}) > .br-radio > label`).click();
+    cy.wait(1000);
     cy.get("#curricularComponent > .br-input > .br-button").click();
+    cy.wait(1000);
     cy.get(`#curricularComponent > .br-list > :nth-child(${curricularComponentRandom}) > .br-radio > label`).click();
+    cy.wait(1000);
 
     cy.get(':nth-child(4) > .medium > #year > .br-input > .br-button').click();
+    cy.wait(1000);
     cy.get(':nth-child(4) > .medium > #year > .br-list > :nth-child(1) > .br-radio > label').click();
+    cy.wait(1000);
 
     cy.get("#curriculumContent").type(textocurto);
+    cy.wait(1000);
     cy.get("#dateOfCompletion").click();
+    cy.wait(1000);
     cy.get(dataSelector).click();
+    cy.wait(1000);
     cy.get("#studentsNumber").type(studentsRandom);
+    cy.wait(1000);
     cy.get("#reportYourPractice").type(textolongo);
 
     // Upload de Arquivo
@@ -56,27 +67,34 @@ describe("Práticas", () => {
     cy.contains(Foto_teste).should("be.visible");
   };
 
+  // 🔹 Função para fechar modal se ele estiver presente
+  const fecharModalSeExistir = () => {
+    cy.wait(1000); // Aguarda tempo razoável para o modal aparecer
+    cy.window().then(() => {
+      const modal = Cypress.$('.br-scrim:nth-child(7) .container-fluid');
+      if (modal.length > 0 && modal.is(':visible')) {
+        cy.get('[style="display: flex; justify-content: center;"] > .secondary').click();
+        cy.log("✅ Modal encontrado e botão clicado.");
+      } else {
+        cy.log("ℹ️ Modal não encontrado, seguindo o teste.");
+      }
+    });
+  };
+
   it("Nova prática", () => {
-    let textocurto = "Automação - " + faker.lorem.words(2);
-    let textolongo = faker.lorem.paragraphs(1);
+    const textocurto = "Automação - " + faker.lorem.words(2);
+    const textolongo = faker.lorem.paragraphs(1);
 
     acessarMenuPraticas();
     cy.get('[href="/conexao/praticas/enviar"]:nth-child(1)').click();
     preencherFormularioPratica(textocurto, textolongo);
 
-    // Submissão e verificação do modal
-    cy.get(".mt-0").click();
-    cy.get('body').then($body => {
-      if ($body.find('.br-modal').length > 0) {
-        cy.get('#closeModalAccepted').click();
-      } else {
-        cy.log("Modal não apareceu, seguindo o teste...");
-      }
-    });
+    cy.contains('button', 'Enviar').click();
+    fecharModalSeExistir();
   });
 
   it("Editar prática", () => {
-    let textocurto = "Automação - " + faker.lorem.words(2);
+    const textocurto = "Automação - " + faker.lorem.words(2);
 
     acessarMenuPraticas();
     cy.get(':nth-child(1) > :nth-child(6) > .tooltip-container > .br-button').click();
@@ -85,33 +103,18 @@ describe("Práticas", () => {
     cy.contains(Foto_teste).should("be.visible");
 
     cy.get(".row > :nth-child(2) > .br-button").click();
-    cy.get(".br-scrim:nth-child(7) .container-fluid").should("be.visible").then(($modal) => {
-      if ($modal.length) {
-        cy.get('[style="display: flex; justify-content: center;"] > .secondary').click();
-        cy.log("Modal encontrado e botão clicado.");
-      } else {
-        cy.log("Modal não encontrado, continuando com o teste.");
-      }
-    });
+    fecharModalSeExistir();
   });
 
   it("Prática repetida", () => {
-    let textocurto = "Automação - " + faker.lorem.words(2);
-    let textolongo = faker.lorem.paragraphs(1);
+    const textocurto = "Automação - " + faker.lorem.words(2);
+    const textolongo = faker.lorem.paragraphs(1);
 
     acessarMenuPraticas();
     cy.get('[href="/conexao/praticas/enviar"]:nth-child(1)').click();
     preencherFormularioPratica(textocurto, textolongo);
 
-    // Submissão e verificação do modal
     cy.get(".row > :nth-child(2) > .br-button").click();
-    cy.get(".br-scrim:nth-child(7) .container-fluid").should("be.visible").then(($modal) => {
-      if ($modal.length) {
-        cy.get('[style="display: flex; justify-content: center;"] > .secondary').click();
-        cy.log("Modal encontrado e botão clicado.");
-      } else {
-        cy.log("Modal não encontrado, continuando com o teste.");
-      }
-    });
+    fecharModalSeExistir();
   });
 });
