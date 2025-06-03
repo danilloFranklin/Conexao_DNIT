@@ -67,6 +67,34 @@ describe("Práticas", () => {
     cy.contains(Foto_teste).should("be.visible");
   };
 
+  const validaObrigatoriedade = (textocurto, textolongo) => {
+    cy.get(".br-checkbox > label").click();
+    cy.wait(1000);
+    cy.get(":nth-child(2) > .medium > #year > .br-input > .br-button").click();
+    cy.wait(1000);
+    cy.get(`#year > .br-list > :nth-child(${yearRandom}) > .br-radio > label`).click();
+    cy.wait(1000);
+    cy.get("#curricularComponent > .br-input > .br-button").click();
+    cy.wait(1000);
+    cy.get(`#curricularComponent > .br-list > :nth-child(${curricularComponentRandom}) > .br-radio > label`).click();
+    cy.wait(1000);
+
+    cy.get(':nth-child(4) > .medium > #year > .br-input > .br-button').click();
+    cy.wait(1000);
+    cy.get(':nth-child(4) > .medium > #year > .br-list > :nth-child(1) > .br-radio > label').click();
+    cy.wait(1000);
+
+    cy.get("#curriculumContent").type(textocurto);
+    cy.wait(1000);
+    cy.get("#dateOfCompletion").click();
+    cy.wait(1000);
+    cy.get(dataSelector).click();
+    cy.wait(1000);
+    cy.get("#studentsNumber").type(studentsRandom);
+    cy.wait(1000);
+    cy.get("#reportYourPractice").type(textolongo);
+  };
+
   // 🔹 Função para fechar modal se ele estiver presente
   const fecharModalSeExistir = () => {
     cy.wait(1000); // Aguarda tempo razoável para o modal aparecer
@@ -115,6 +143,24 @@ describe("Práticas", () => {
     preencherFormularioPratica(textocurto, textolongo);
 
     cy.get(".row > :nth-child(2) > .br-button").click();
+    fecharModalSeExistir();
+  });
+
+  it("imagem obrigatoria", () => {
+    const textocurto = "Automação - " + faker.lorem.words(2);
+    const textolongo = faker.lorem.paragraphs(1);
+
+    acessarMenuPraticas();
+    cy.get('[href="/conexao/praticas/enviar"]:nth-child(1)').click();
+
+
+    validaObrigatoriedade(textocurto, textolongo);
+
+    
+    cy.contains('button', 'Enviar').click();
+
+    cy.get('span[role="alert"]').contains("Você deve enviar pelo menos uma imagem.");
+
     fecharModalSeExistir();
   });
 });
