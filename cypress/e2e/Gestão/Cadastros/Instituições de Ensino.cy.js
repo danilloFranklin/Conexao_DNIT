@@ -166,9 +166,13 @@ describe("Instituições de Ensino", () => {
         cy.get('input#input_cycle').click(); // se for um dropdown ou ativador
         cy.contains('label', opcaoEscolhida).click();
         cy.get('label[for="actingDnitCycle"]').click();
+
         cy.get('input[name="amountEnroll"]').clear().type(getNumeroAleatorio().toString());
+
         cy.get('input[name="amountTeachers"]').clear().type(getNumeroAleatorio().toString());
+
         cy.get('input[name="amountClasses"]').clear().type(getNumeroAleatorio().toString());
+        
         cy.get('button.primary').eq(1).click();
         cy.get('button[type="submit"]').click();
         cy.get('input#searchbox').type(textocurto)
