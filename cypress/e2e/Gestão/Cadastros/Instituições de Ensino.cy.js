@@ -183,7 +183,8 @@ describe("Instituições de Ensino", () => {
         cy.contains('button', 'Buscar').click();
         cy.contains('button', 'Sim').click();
         cy.contains("Nenhum registro encontrado.").should("be.visible");
-        cy.wait(1000);
+        cy.wait(1000); //salvar e baixar no pc
+        
 
     
 
