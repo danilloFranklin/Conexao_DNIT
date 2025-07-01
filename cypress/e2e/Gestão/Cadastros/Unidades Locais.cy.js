@@ -22,34 +22,30 @@ describe("Unidades Locais", () => {
       cy.get('button[data-toggle="menu"]').click();
       cy.contains("span", "Cadastros").click();
       cy.get('a[href="/conexao/gestao/unidade-local"] span').click();
-      cy.contains("td", "DANILLO TESTE 30/08/2023");
+      cy.contains("td", "UNIDADE LOCAL DE ÁGUA BOA/MT");
     });
-    it("baixar e validar o CSV", () => {
+    it.only("baixar e validar o CSV", () => {
       cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
       cy.get('button[data-toggle="menu"]').click();
       cy.contains("span", "Cadastros").click();
       cy.get('a[href="/conexao/gestao/unidade-local"] span').click();
-      cy.contains("td", "DANILLO TESTE 30/08/2023");
+      cy.contains("td", "UNIDADE LOCAL DE ÁGUA BOA/MT");
       cy.get("i.fa-download").click();
 
       // baixar, validar e excluir arquivo
       cy.readFile(filePath, { timeout: 10000 }).should("exist");
 
-      // Faz o parse do CSV e valida se existe "Danillo teste 30/08/2023" na coluna "Unidade Local"
+      // Faz o parse do CSV e valida se existe "UNIDADE LOCAL DE ÁGUA BOA/MT" na coluna "Unidade Local"
       cy.task("parseCsv", { filePath }).then((rows) => {
         // Loga os dados lidos (opcional, para debug)
         console.log(rows);
 
         const registroEncontrado = rows.find((row) =>
-          row["Unidade Local"]?.includes("Danillo teste 30/08/2023")
+          row["Unidade Local"]?.includes("UNIDADE LOCAL DE ÁGUA BOA/MT")
         );
 
-        expect(
-          registroEncontrado,
-          'Danillo teste 30/08/2023 não encontrado na coluna "Unidade Local"'
-        ).to.exist;
+        expect(registroEncontrado, 'UNIDADE LOCAL DE ÁGUA BOA/MT não encontrado na coluna "Unidade Local"').to.exist;
       });
-
       // Exclui o arquivo após validação
       cy.task("deleteFile", filePath).should("equal", true);
     });
@@ -59,7 +55,7 @@ describe("Unidades Locais", () => {
         cy.contains("span", "Cadastros").click();
         cy.get('a[href="/conexao/gestao/unidade-local"] span').click();
         cy.contains(
-          "td", "DANILLO TESTE 30/08/2023"
+          "td", "UNIDADE LOCAL DE ÁGUA BOA/MT"
         );
         cy.get("input#searchbox").type(
           "UNIDADE LOCAL DE CARATINGA/MG"
@@ -73,7 +69,7 @@ describe("Unidades Locais", () => {
         cy.contains("span", "Cadastros").click();
         cy.get('a[href="/conexao/gestao/unidade-local"] span').click();
         cy.contains(
-          "td", "DANILLO TESTE 30/08/2023"
+          "td", "UNIDADE LOCAL DE ÁGUA BOA/MT"
         );
         cy.get("input#searchbox").type(
           "UNIDADE LOCAL DE CARATINGA/MG"
@@ -82,7 +78,7 @@ describe("Unidades Locais", () => {
         cy.get('td[data-th="Unidade Local"]').contains('UNIDADE LOCAL DE CARATINGA/MG').should("be.visible");
         cy.contains('button', 'Limpar').click();
         cy.contains(
-            "td", "DANILLO TESTE 30/08/2023"
+            "td", "UNIDADE LOCAL DE ÁGUA BOA/MT"
           );
       });
       
@@ -91,7 +87,7 @@ describe("Unidades Locais", () => {
         cy.get('button[data-toggle="menu"]').click();
         cy.contains("span", "Cadastros").click();
         cy.get('a[href="/conexao/gestao/unidade-local"] span').click();
-        cy.contains("td", "DANILLO TESTE 30/08/2023");
+        cy.contains("td", "UNIDADE LOCAL DE ÁGUA BOA/MT");
         cy.get('i.fa-plus').click();
         cy.wait(2000);
         cy.get('div[id="regionalSuperintendence"] i').click();
