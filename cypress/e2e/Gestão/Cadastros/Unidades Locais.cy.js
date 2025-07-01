@@ -41,11 +41,17 @@ describe("Unidades Locais", () => {
         console.log(rows);
 
         const registroEncontrado = rows.find((row) =>
-          row["Unidade Local"]?.includes("Danillo teste 30/08/2023")
+          row["Unidade Local"]?.includes(
+            "Danillo teste 30/08/2023"
+          )
         );
 
-        expect(registroEncontrado, 'Danillo teste 30/08/2023 não encontrado na coluna "Unidade Local"').to.exist;
+        expect(
+          registroEncontrado,
+          'Danillo teste 30/08/2023 não encontrado na coluna "Unidade Local" '
+        ).to.exist;
       });
+
       // Exclui o arquivo após validação
       cy.task("deleteFile", filePath).should("equal", true);
     });
