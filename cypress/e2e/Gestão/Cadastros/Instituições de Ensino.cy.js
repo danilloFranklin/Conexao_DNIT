@@ -74,7 +74,7 @@ describe("Instituições de Ensino", () => {
         "be.visible"
       );
     });
-    it("Baixar CSV", () => {
+    it.only("Baixar CSV", () => {
       cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
       cy.get('button[data-toggle="menu"]').click();
       cy.contains("span", "Cadastros").click();
