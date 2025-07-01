@@ -172,7 +172,7 @@ describe("Instituições de Ensino", () => {
         cy.get('input[name="amountTeachers"]').clear().type(getNumeroAleatorio().toString());
 
         cy.get('input[name="amountClasses"]').clear().type(getNumeroAleatorio().toString());
-        
+
         cy.get('button.primary').eq(1).click();
         cy.get('button[type="submit"]').click();
         cy.get('input#searchbox').type(textocurto)
@@ -183,7 +183,7 @@ describe("Instituições de Ensino", () => {
         cy.contains('button', 'Buscar').click();
         cy.contains('button', 'Sim').click();
         cy.contains("Nenhum registro encontrado.").should("be.visible");
-        cy.wait(1000); //salvar e baixar no pc
+        cy.wait(1000);
         
 
     
