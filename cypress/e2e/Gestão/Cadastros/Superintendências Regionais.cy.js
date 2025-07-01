@@ -3,7 +3,7 @@ describe("Superintendências Regionais", () => {
   {
     const fileName = "superintendencias_regionais.csv"; // Nome do arquivo esperado
     const filePath = `cypress/downloads/${fileName}`;
-    const textocurto = `Automação - ${faker.lorem.words(2)}`;
+    const textocurto = `Automação Superintendência Regional  - ${faker.lorem.words(2)}`;
     const telefoneValido = faker.phone.number("(##) #########");
     const emailValido = faker.internet.email();
 

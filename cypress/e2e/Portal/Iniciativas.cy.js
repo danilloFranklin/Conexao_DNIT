@@ -2,7 +2,7 @@ import { pt_BR, faker } from "@faker-js/faker";
 
 describe("Iniciativas", () => {
   const Foto_teste = "Foto_teste.jpg";
-  const textocurto = "Automação - " + faker.lorem.words(2);
+  const textocurto = "Automação Iniciativa - " + faker.lorem.words(2);
   const textolongo = faker.lorem.paragraphs(1);
   beforeEach(() => {
     cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao"); // Acesse a página antes de setar o localStorage

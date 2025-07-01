@@ -110,7 +110,7 @@ describe("Práticas", () => {
   };
 
   it("Nova prática", () => {
-    const textocurto = "Automação - " + faker.lorem.words(2);
+    const textocurto = "Automação Pratica- " + faker.lorem.words(2);
     const textolongo = faker.lorem.paragraphs(1);
 
     acessarMenuPraticas();
@@ -122,7 +122,7 @@ describe("Práticas", () => {
   });
 
   it("Editar prática", () => {
-    const textocurto = "Automação - " + faker.lorem.words(2);
+    const textocurto = "Automação Pratica - " + faker.lorem.words(2);
 
     acessarMenuPraticas();
     cy.get(':nth-child(1) > :nth-child(6) > .tooltip-container > .br-button').click();
@@ -135,7 +135,7 @@ describe("Práticas", () => {
   });
 
   it("Prática repetida", () => {
-    const textocurto = "Automação - " + faker.lorem.words(2);
+    const textocurto = "Automação Pratica - " + faker.lorem.words(2);
     const textolongo = faker.lorem.paragraphs(1);
 
     acessarMenuPraticas();
@@ -147,7 +147,7 @@ describe("Práticas", () => {
   });
 
   it("imagem obrigatoria", () => {
-    const textocurto = "Automação - " + faker.lorem.words(2);
+    const textocurto = "Automação Pratica - " + faker.lorem.words(2);
     const textolongo = faker.lorem.paragraphs(1);
 
     acessarMenuPraticas();

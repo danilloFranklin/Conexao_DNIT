@@ -3,7 +3,7 @@ import { pt_BR, faker } from "@faker-js/faker";
 // Configurações iniciais
 const timeoutValue = Cypress.config('defaultCommandTimeout');
 const today = new Date();
-const textocurto = "Automação - " + faker.lorem.words(2);
+const textocurto = "Automação Planejamento - " + faker.lorem.words(2);
 
 // Nomes dos meses
 const monthNames = [

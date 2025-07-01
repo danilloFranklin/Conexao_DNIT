@@ -3,7 +3,7 @@ describe("Unidades Locais", () => {
   {
     const fileName = "lista_unidades_locais.csv"; // Nome do arquivo esperado
     const filePath = `cypress/downloads/${fileName}`;
-    const textocurto = `Automação - ${faker.lorem.words(2)}`;
+    const textocurto = `Automação Unidade Local - ${faker.lorem.words(2)}`;
     const telefoneValido = faker.phone.number("(##) #########");
     const emailValido = faker.internet.email();
 
@@ -106,7 +106,7 @@ describe("Unidades Locais", () => {
         cy.get('input.medium').eq(1).type(telefoneValido);
         cy.get('input#email').type(emailValido);
         cy.get('input#zipCode').type("76995970")
-        cy.wait(2000);
+        cy.contains('p', 'Logradouro*: Avenida Itália Cautiero Franco').should('be.visible');
         cy.get('input#number').type('20')
         cy.get('button[value="save"]').click('')
         cy.get('input#searchbox').type(textocurto);

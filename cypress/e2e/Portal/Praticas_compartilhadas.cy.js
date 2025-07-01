@@ -2,7 +2,7 @@ import { pt_BR, faker } from "@faker-js/faker";
 
 describe("Práticas Compartilhadas", () => {
   const Foto_teste = "Foto_teste.jpg";
-  const textocurto = "Automação - " + faker.lorem.words(2);
+  const textocurto = "Automação Praticas - " + faker.lorem.words(2);
   const textolongo = faker.lorem.paragraphs(1);
 
   function validarDescricaoTexto() {
