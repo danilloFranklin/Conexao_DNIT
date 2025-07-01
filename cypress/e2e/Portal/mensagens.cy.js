@@ -20,7 +20,7 @@ function enviarMensagem(tipoMensagem) {
   let textolongo = faker.lorem.paragraphs(1);
 
   cy.get(".header-menu > .br-button > .fas").should("be.visible").click();
-  cy.get(":nth-child(6) > #\\35 0").should("be.visible").click();
+  cy.get('a[href="/conexao/mensagens"]').eq(1).should("be.visible").click();
   cy.get('[href="/conexao/mensagens/enviar"]:nth-child(1)').should("be.visible").click();
   cy.wait(15000)
   cy.get(':nth-child(3) > :nth-child(3) > a > .br-button').should("be.visible").click();
@@ -62,7 +62,7 @@ describe("Mensagens", () => {
     let textolongo = faker.lorem.paragraphs(1);
     cy.get(".header-menu > .br-button > .fas").should('be.visible').click();
     cy.wait(500);
-    cy.get(":nth-child(6) > #\\35 0").should('be.visible').click();
+    cy.get('a[href="/conexao/mensagens"]').eq(1).should('be.visible').click();
     cy.get('[href="/conexao/mensagens/enviar"]:nth-child(1)').should("be.visible").click();
     cy.wait(1000)
     cy.get(':nth-child(3) > :nth-child(3) > a > .br-button').should("be.visible").click();

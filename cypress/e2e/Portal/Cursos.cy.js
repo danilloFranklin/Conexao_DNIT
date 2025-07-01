@@ -17,7 +17,7 @@ describe("Cursos", () => {
 
   const acessarMenuCursos = () => {
     cy.get("div.header-menu i").should("exist").click();
-    cy.get("div.header-bottom div:nth-of-type(3) > a").should("exist").click();
+    cy.get('a[href="/conexao/cursos"]').eq(0).should("exist").click();
     cy.contains("Teste Automação - Não excluir").should("exist");
   };
 

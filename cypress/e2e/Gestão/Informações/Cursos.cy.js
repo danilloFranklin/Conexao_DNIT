@@ -11,7 +11,6 @@ describe("Paginas iniciais", () => {
   });
   it("Sobre o Conexão", () => {
     cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
-    cy.get('i.fa-bars').click();
   }); 
  });
  

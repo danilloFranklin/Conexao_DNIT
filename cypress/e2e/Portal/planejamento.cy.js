@@ -99,19 +99,28 @@ describe("Atividades", () => {
     cy.get('#planningTitle').type(textocurto);
 
     cy.scrollTo(0, 247);
-    cy.get('.br-input > #From').first().click();
+    cy.get('input#From').first().click();
+    cy.wait(1000)
     cy.get(dataSelectorCurrentMonth).eq(0).click(); // Data de início
-
-    cy.get('.br-input > #To').should("be.visible").click();
+    cy.get('input[name="dateEnd"]').should("be.visible").click();
+    cy.wait(1000)
     cy.get('.open .flatpickr-next-month .fas').click(); // Vai para o próximo mês
+    cy.wait(1000)
     cy.get('.open .flatpickr-next-month .fas').click(); // Vai para o segundo próximo mês
     cy.get(dataSelectorFutureMonth).eq(0).click(); // Data de fim
+    cy.wait(1000)
 
     // 👉 Digitando data aleatória entre início e fim
     cy.log("Data aleatória: " + digitsDateRandomBetween);
     cy.scrollTo(0, 444);
-    cy.get('#scheduledDate-6').should("be.visible").click().type(digitsDateRandomBetween);
-
+    cy.wait(1000)
+    cy.get('#scheduledDate-5').should("exist").type(digitsDateRandomBetween);
+    cy.get('div#__next').click();
+    cy.wait(1000)
+    cy.get('#scheduledDate-6').should("exist").click().type(digitsDateRandomBetween);
+    cy.get('div#__next').click();
+    cy.wait(1000)
     cy.get('.col-auto > .primary').should("be.visible").click();
+    
   });
 });

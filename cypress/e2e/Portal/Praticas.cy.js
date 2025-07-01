@@ -29,8 +29,8 @@ describe("Práticas", () => {
 
   // 🔹 Função para acessar a página de práticas
   const acessarMenuPraticas = () => {
-    cy.get(".header-menu > .br-button > .fas").click();
-    cy.get(':nth-child(7) > #\\35 7').should("be.visible").click();
+    cy.get('button[data-target="#navigation"] i').click();
+    cy.contains('a', 'Minhas Práticas').should("be.visible").click();
     cy.contains("Conte como foi realizar a atividade de Educação para o Trânsito").should("be.visible");
   };
 
@@ -38,11 +38,11 @@ describe("Práticas", () => {
   const preencherFormularioPratica = (textocurto, textolongo) => {
     cy.get(".br-checkbox > label").click();
     cy.wait(1000);
-    cy.get(":nth-child(2) > .medium > #year > .br-input > .br-button").click();
+    cy.get('input[placeholder="Selecione o ano/série da prática."]').click();
     cy.wait(1000);
     cy.get(`#year > .br-list > :nth-child(${yearRandom}) > .br-radio > label`).click();
     cy.wait(1000);
-    cy.get("#curricularComponent > .br-input > .br-button").click();
+    cy.get('input#input_curricularComponent').click();
     cy.wait(1000);
     cy.get(`#curricularComponent > .br-list > :nth-child(${curricularComponentRandom}) > .br-radio > label`).click();
     cy.wait(1000);
@@ -58,7 +58,7 @@ describe("Práticas", () => {
     cy.wait(1000);
     cy.get(dataSelector).click();
     cy.wait(1000);
-    cy.get("#studentsNumber").type(studentsRandom);
+    cy.get('input#numberOfStudents').type(studentsRandom);
     cy.wait(1000);
     cy.get("#reportYourPractice").type(textolongo);
 
@@ -70,18 +70,18 @@ describe("Práticas", () => {
   const validaObrigatoriedade = (textocurto, textolongo) => {
     cy.get(".br-checkbox > label").click();
     cy.wait(1000);
-    cy.get(":nth-child(2) > .medium > #year > .br-input > .br-button").click();
+    cy.get('input[placeholder="Selecione o ano/série da prática."]').click();
     cy.wait(1000);
     cy.get(`#year > .br-list > :nth-child(${yearRandom}) > .br-radio > label`).click();
     cy.wait(1000);
-    cy.get("#curricularComponent > .br-input > .br-button").click();
+    cy.get('input#input_curricularComponent').click();
     cy.wait(1000);
     cy.get(`#curricularComponent > .br-list > :nth-child(${curricularComponentRandom}) > .br-radio > label`).click();
     cy.wait(1000);
 
-    cy.get(':nth-child(4) > .medium > #year > .br-input > .br-button').click();
+    cy.get('input[placeholder="Selecione a atividade utilizada na prática."]').click();
     cy.wait(1000);
-    cy.get(':nth-child(4) > .medium > #year > .br-list > :nth-child(1) > .br-radio > label').click();
+    cy.get('label[for*="activities_selector"]').eq(0).click();
     cy.wait(1000);
 
     cy.get("#curriculumContent").type(textocurto);
@@ -90,7 +90,7 @@ describe("Práticas", () => {
     cy.wait(1000);
     cy.get(dataSelector).click();
     cy.wait(1000);
-    cy.get("#studentsNumber").type(studentsRandom);
+    cy.get('input#numberOfStudents').type(studentsRandom);
     cy.wait(1000);
     cy.get("#reportYourPractice").type(textolongo);
   };
@@ -159,8 +159,10 @@ describe("Práticas", () => {
     
     cy.contains('button', 'Enviar').click();
 
-    cy.get('span[role="alert"]').contains("Você deve enviar pelo menos uma imagem.");
+    cy.wait(1500)
 
     fecharModalSeExistir();
+
+    cy.contains("Você deve enviar pelo menos uma imagem.").should('exist');    
   });
 });

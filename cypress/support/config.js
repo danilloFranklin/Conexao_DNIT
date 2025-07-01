@@ -1,7 +1,7 @@
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
-  defaultCommandTimeout: 15000,
+  defaultCommandTimeout: 10000,
   browser: "chrome", // Define o tempo limite padrão para 10 segundos
   e2e: {
     setupNodeEvents(on, config) {

@@ -6,7 +6,6 @@ Cypress.Commands.add("setLocalStorage", () => {
       win.localStorage.setItem("user", JSON.stringify(Cypress.env("user")));
     });
   });
-
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
