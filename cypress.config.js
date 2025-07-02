@@ -35,8 +35,10 @@ module.exports = defineConfig({
           return new Promise((resolve) => {
             Papa.parse(csv, {
               header: true,
+              delimiter: ';',
               skipEmptyLines: true,
               complete: (results) => resolve(results.data),
+              
             });
           });
         },

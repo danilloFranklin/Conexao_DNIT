@@ -3,7 +3,7 @@ describe("Unidades Locais", () => {
   {
     const fileName = "lista_unidades_locais.csv"; // Nome do arquivo esperado
     const filePath = `cypress/downloads/${fileName}`;
-    const textocurto = `Automação Unidade Local - ${faker.lorem.words(2)}`;
+    const textocurto = `Automação - ${faker.lorem.words(2)}`;
     const telefoneValido = faker.phone.number("(##) #########");
     const emailValido = faker.internet.email();
 
@@ -24,36 +24,37 @@ describe("Unidades Locais", () => {
       cy.get('a[href="/conexao/gestao/unidade-local"] span').click();
       cy.contains("td", "DANILLO TESTE 30/08/2023");
     });
-    it.only("baixar e validar o CSV", () => {
+    it("baixar e validar o CSV", () => {
       cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
+    
       cy.get('button[data-toggle="menu"]').click();
       cy.contains("span", "Cadastros").click();
       cy.get('a[href="/conexao/gestao/unidade-local"] span').click();
       cy.contains("td", "DANILLO TESTE 30/08/2023");
+    
       cy.get("i.fa-download").click();
+    
+      // Aguarda o download do arquivo
+      cy.readFile(filePath, { timeout: 10000 }).should("exist");
 
-      cy.wait(3000);
+      // Faz o parse do CSV e valida se existe "SUPERINTENDÊNCIA REGIONAL DO DNIT NO ESTADO DA BAHIA" na coluna "Unidade Local"
+      cy.task("parseCsv", { filePath }).then((rows) => {
 
-      // baixar, validar e excluir arquivo
-      cy.readFile(filePath, { timeout: 15000 }).should("exist");
+        const registroEncontrado = rows.find((row) =>
+          row["Unidade Local"]?.includes(
+            "Danillo teste 30/08/2023"
+          )
+        );
 
-// Faz o parse do CSV e valida se existe "UNIDADE LOCAL DE ÁGUA BOA/MT" na coluna "Unidade Local"
-cy.task("parseCsv", { filePath }).then((rows) => {
-  const registroEncontrado = rows.find((row) =>
-    row["Unidade Local"]?.includes("Danillo teste 30/08/2023")
-  );
+        expect(
+          registroEncontrado,
+          'SUPERINTENDÊNCIA REGIONAL DO DNIT NO ESTADO DA BAHIA não encontrado na coluna "Unidade Local"'
+        ).to.exist;
+      });
 
-  expect(
-    registroEncontrado,
-    'Danillo teste 30/08/2023 não encontrado na coluna "Unidade Local"'
-  ).to.exist;
-});
-
-// Exclui o arquivo após validação
-cy.task("deleteFile", filePath).should("equal", true);
-
-});
-
+      // Exclui o arquivo após validação
+      cy.task("deleteFile", filePath).should("equal", true);
+    });
     it("Campo de busca", () => {
         cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
         cy.get('button[data-toggle="menu"]').click();

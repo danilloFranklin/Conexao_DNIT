@@ -3,7 +3,7 @@ describe("Instituições de Ensino", () => {
   {
     const fileName = "lista_instituicoes.csv"; // Nome do arquivo esperado
     const filePath = `cypress/downloads/${fileName}`;
-    const textocurto = `Automação Instituição de Ensino - ${faker.lorem.words(2)}`;
+    const textocurto = `Automação - ${faker.lorem.words(2)}`;
     const telefoneValido = faker.phone.number("(##) #########");
     const emailValido = faker.internet.email();
     const numeroAleatorio = Math.floor(10000000 + Math.random() * 90000000);
@@ -74,7 +74,7 @@ describe("Instituições de Ensino", () => {
         "be.visible"
       );
     });
-    it.only("Baixar CSV", () => {
+    it("Baixar CSV", () => {
       cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
       cy.get('button[data-toggle="menu"]').click();
       cy.contains("span", "Cadastros").click();
@@ -101,7 +101,6 @@ describe("Instituições de Ensino", () => {
       // Faz o parse do CSV e valida se existe "EE DOUTOR ODILON LOURES" na coluna "Identificação da Instituição de Ensino"
       cy.task("parseCsv", { filePath }).then((rows) => {
         // Loga os dados lidos (opcional, para debug)
-        console.log(rows);
 
         const registroEncontrado = rows.find((row) =>
           row["Identificação da Instituição de Ensino"]?.includes(
@@ -142,7 +141,7 @@ describe("Instituições de Ensino", () => {
           cy.get('td[data-th="Instituição"]').contains('0000001 A ESCOLA TESTE. KRYCIA 04/12').should("be.visible");
         
       });
-      it.only("Cadastrar e excluir", () => {
+      it("Cadastrar e excluir", () => {
         const opcoes = ['Ensino Fundamental', 'Ensino Médio'];
         const opcaoEscolhida = opcoes[Math.floor(Math.random() * opcoes.length)];
         const getNumeroAleatorio = () => Math.floor(Math.random() * 101); // 0 a 100
@@ -166,23 +165,20 @@ describe("Instituições de Ensino", () => {
         cy.get('input#input_cycle').click(); // se for um dropdown ou ativador
         cy.contains('label', opcaoEscolhida).click();
         cy.get('label[for="actingDnitCycle"]').click();
-
         cy.get('input[name="amountEnroll"]').clear().type(getNumeroAleatorio().toString());
-
         cy.get('input[name="amountTeachers"]').clear().type(getNumeroAleatorio().toString());
-
         cy.get('input[name="amountClasses"]').clear().type(getNumeroAleatorio().toString());
-
         cy.get('button.primary').eq(1).click();
         cy.get('button[type="submit"]').click();
         cy.get('input#searchbox').type(textocurto)
         cy.contains('button', 'Buscar').click();
         cy.get('td[data-th="Instituição"]').contains(textocurto.toUpperCase()).should('be.visible');
         cy.get('i.fa-trash').click();
-        cy.get('input#searchbox').type(textocurto)
-        cy.contains('button', 'Buscar').click();
         cy.contains('button', 'Sim').click();
-        cy.contains("Nenhum registro encontrado.").should("be.visible");
+        cy.get('input#searchbox').clear().type(textocurto)
+        cy.contains('button', 'Buscar').click();
+        cy.wait(500);    
+        cy.contains('td', 'Nenhum registro encontrado').closest('tr').find('td').should("be.visible");
         cy.wait(1000);
 
         

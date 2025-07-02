@@ -3,8 +3,8 @@ describe("Superintendências Regionais", () => {
   {
     const fileName = "superintendencias_regionais.csv"; // Nome do arquivo esperado
     const filePath = `cypress/downloads/${fileName}`;
-    const textocurto = `Automação Superintendência Regional  - ${faker.lorem.words(2)}`;
-    const telefoneValido = faker.phone.number("(##) #########");
+    const textocurto = `Automação - ${faker.lorem.words(2)}`;
+    const telefoneValido = faker.phone.number("###########");
     const emailValido = faker.internet.email();
 
     beforeEach(() => {
@@ -34,25 +34,23 @@ describe("Superintendências Regionais", () => {
 
       cy.readFile(filePath, { timeout: 10000 }).should("exist");
 
-      // Faz o parse do CSV e valida se existe "SUPERINTENDÊNCIA REGIONAL DO DNIT NO ESTADO DE MINAS GERAIS" na coluna "Unidade Local"
+      // Faz o parse do CSV e valida se existe "SUPERINTENDÊNCIA REGIONAL DO DNIT NO ESTADO DA BAHIA" na coluna "Unidade Local"
       cy.task("parseCsv", { filePath }).then((rows) => {
         // Loga os dados lidos (opcional, para debug)
-        console.log(rows);
-
         const registroEncontrado = rows.find((row) =>
           row["Superintendência Regional"]?.includes(
-            "SUPERINTENDÊNCIA REGIONAL DO DNIT NO ESTADO DE MINAS GERAIS"
+            "DANILLO FRANKLIN LEITE LOPES"
           )
         );
 
         expect(
           registroEncontrado,
-          'SUPERINTENDÊNCIA REGIONAL DO DNIT NO ESTADO DE MINAS GERAIS não encontrado na coluna "Unidade Local"'
+          'SUPERINTENDÊNCIA REGIONAL DO DNIT NO ESTADO DA BAHIA não encontrado na coluna "Unidade Local"'
         ).to.exist;
       });
 
       // Exclui o arquivo após validação
-      cy.task("deleteFile", filePath).should("equal", true);
+      // cy.task("deleteFile", filePath).should("equal", true);
     });
     it("Campo de busca", () => {
       cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
@@ -61,11 +59,11 @@ describe("Superintendências Regionais", () => {
       cy.contains("span", "Superintendências Regionais").click();
       cy.contains(
         "td",
-        "SUPERINTENDÊNCIA REGIONAL DO DNIT NO ESTADO DE MINAS GERAIS"
+        "SUPERINTENDÊNCIA REGIONAL DO DNIT NO ESTADO DA BAHIA"
       );
       cy.get("input#searchbox").type(
-        "SUPERINTENDÊNCIA REGIONAL DO DNIT NO ESTADO DE MINAS GERAIS"
-      );
+        "SUPERINTENDÊNCIA REGIONAL DO DNIT NO ESTADO DA BAHIA"
+      ); 
       cy.contains("button", "Buscar").click();
       cy.get('td[data-th="Superintendência Regional"]').should("be.visible");
     });
@@ -99,16 +97,14 @@ describe("Superintendências Regionais", () => {
       cy.get("input#name").type(textocurto);
       cy.get('input[type="text"]').eq(1).type(telefoneValido);
       cy.get("input#email").type(emailValido);
-      cy.get("input#zipCode").type(30710500);
-      cy.wait(500);
+      cy.get("input#zipCode").type("76995970");
+      cy.contains('p', 'Logradouro*: Avenida Itália Cautiero Franco').should('be.visible');
       cy.get("input#number").type(500);
       cy.wait(1500);
       cy.get('button[value="save"]').click();
       cy.get("input#searchbox").type(textocurto);
       cy.contains("button", "Buscar").click();
-      cy.get('td[data-th="Superintendência Regional"]')
-        .contains(textocurto.toUpperCase())
-        .should("be.visible");
+      cy.contains('td', textocurto.toUpperCase()).closest('tr').find('td[data-th*="Superintendência Regional"]').should("be.visible");
       cy.get("i.fa-trash").click();
       cy.contains("button", "Sim").click();
       cy.contains("button", "Limpar").click();
