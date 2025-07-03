@@ -76,12 +76,16 @@ describe("Superintendências Regionais", () => {
         "td",
         "SUPERINTENDÊNCIA REGIONAL DO DNIT NO ESTADO DE MINAS GERAIS"
       );
+      cy.wait(600);
       cy.get("input#searchbox").type(
         "SUPERINTENDÊNCIA REGIONAL DO DNIT NO ESTADO DE MINAS GERAIS"
       );
+      cy.wait(600);
       cy.contains("button", "Buscar").click();
+      cy.wait(600);
       cy.get('td[data-th="Superintendência Regional"]').should("be.visible");
       cy.contains("button", "Limpar").click();
+      cy.wait(600);
       cy.contains(
         "td",
         "CADASTRO DE SUPERINTENDÊNCIA REGIONAL ESTADUAL PRA EXCLUIR"

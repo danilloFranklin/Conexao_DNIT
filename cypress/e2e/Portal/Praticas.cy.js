@@ -97,18 +97,16 @@ describe("Práticas", () => {
 
   // 🔹 Função para fechar modal se ele estiver presente
   const fecharModalSeExistir = () => {
-    cy.wait(1000); // Aguarda tempo razoável para o modal aparecer
-    cy.window().then(() => {
-      const modal = Cypress.$('.br-scrim:nth-child(7) .container-fluid');
-      if (modal.length > 0 && modal.is(':visible')) {
-        cy.get('[style="display: flex; justify-content: center;"] > .secondary').click();
+    cy.get('body').then(($body) => {
+      const botaoFechar = $body.find('[style="display: flex; justify-content: center;"] > .secondary');
+      if (botaoFechar.length > 0) {
+        cy.wrap(botaoFechar).click({ force: true });
         cy.log("✅ Modal encontrado e botão clicado.");
       } else {
         cy.log("ℹ️ Modal não encontrado, seguindo o teste.");
       }
     });
   };
-
   it("Nova prática", () => {
     const textocurto = "Automação Pratica- " + faker.lorem.words(2);
     const textolongo = faker.lorem.paragraphs(1);
