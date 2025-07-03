@@ -1,12 +1,11 @@
 const { defineConfig } = require("cypress");
 const fs = require("fs");
-const Papa = require("papaparse"); // ← Adicionado aqui
-
+const Papa = require("papaparse"); //csv
 module.exports = defineConfig({
   projectId: "e97tc3",
   retries: {
-    runMode: 2,
-    openMode: 2,
+    runMode: 0,
+    openMode: 0,
   },
   defaultCommandTimeout: 30000,
   responseTimeout: 10000,
