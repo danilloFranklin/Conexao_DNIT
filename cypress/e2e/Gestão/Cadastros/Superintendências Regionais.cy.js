@@ -50,7 +50,7 @@ describe("Superintendências Regionais", () => {
       });
 
       // Exclui o arquivo após validação
-      // cy.task("deleteFile", filePath).should("equal", true);
+      cy.task("deleteFile", filePath).should("equal", true);
     });
     it("Campo de busca", () => {
       cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
