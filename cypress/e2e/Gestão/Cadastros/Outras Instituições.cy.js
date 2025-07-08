@@ -100,8 +100,7 @@ describe("Outras Instituições", () => {
           cy.contains("span", "Cadastros").click();
           cy.get('a[href="/conexao/gestao/outras-instituicoes"] span').click();
           cy.contains("td", "CEF SANTOS DUMONT").should("be.visible")
-            
-            cy.get('input#searchbox').clear().type('CMEI JOANA BATISTA CHAGAS');
+            cy.get('input#searchbox').clear().type('CEF SANTOS DUMONT');
             cy.contains('button', 'Buscar').click();
             cy.get('i[aria-describedby="tooltipEditar"]').eq(0).click();
             cy.wait(500);
@@ -113,14 +112,18 @@ describe("Outras Instituições", () => {
             cy.contains("button", "Buscar").click();
             cy.contains(textocurto.toUpperCase()).should("be.visible");
             cy.get('i[aria-describedby="tooltipEditar"]').click();
-            cy.get('input#identification').clear().type("CMEI JOANA BATISTA CHAGAS");
+            cy.wait(1000);
+            cy.get('input#name').click().clear();
+            cy.wait(1000);
+            cy.get('input#name').type("CEF SANTOS DUMONT");
+            cy.wait(1000);
             cy.get('button[type="submit"]').click();
-            cy.get("input#searchbox").clear().type('CMEI JOANA BATISTA CHAGAS');
+            cy.get("input#searchbox").clear().type('CEF SANTOS DUMONT');
             cy.contains("button", "Buscar").click();
-            cy.get('td[data-th="Instituição"]').contains('CMEI JOANA BATISTA CHAGAS').should("be.visible");
+            cy.get('td[data-th="Instituição"]').contains('CEF SANTOS DUMONT').should("be.visible");
           
         });
-        it.only("Cadastrar e excluir", () => {
+        it("Cadastrar e excluir", () => {
           const getNumeroAleatorio = () => Math.floor(Math.random() * 101); // 0 a 100
   
           cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
@@ -138,7 +141,7 @@ describe("Outras Instituições", () => {
           cy.get('input#number').type(numeroAleatorio);
           cy.get('button[type="submit"]').click();
           cy.get('input#searchbox').type(textocurto)
-            cy.contains('button', 'Buscar').click();
+         cy.contains('button', 'Buscar').click();
         cy.get('td[data-th="Instituição"]').contains(textocurto.toUpperCase()).should('be.visible');
         cy.get('i.fa-trash').eq(0).click();
         cy.contains('button', 'Sim').click();

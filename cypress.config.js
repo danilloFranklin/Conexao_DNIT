@@ -1,23 +1,37 @@
 const { defineConfig } = require("cypress");
 const fs = require("fs");
-const Papa = require("papaparse"); //csv
+const Papa = require("papaparse");
+
 module.exports = defineConfig({
   projectId: "e97tc3",
-  retries: {
-    runMode: 0,
-    openMode: 0,
+
+reporter: "cypress-mochawesome-reporter",
+
+  reporterOptions: {
+    reportDir: "cypress/reports",
+    overwrite: true,
+    html: true,
+    json: true,
+    autoOpen: false,
+    charts: true,
   },
+
+  retries: {
+    runMode: 2,
+    openMode: 2,
+  },
+
   defaultCommandTimeout: 30000,
   responseTimeout: 10000,
   requestTimeout: 5000,
   animationDistanceThreshold: 5,
 
   e2e: {
-    slowMo: 10000,
     setupNodeEvents(on, config) {
       config.editor = "code";
 
-      // Tasks personalizadas
+    require('cypress-mochawesome-reporter/plugin')(on);
+
       on("task", {
         fileExists(filePath) {
           return fs.existsSync(filePath);
@@ -34,10 +48,9 @@ module.exports = defineConfig({
           return new Promise((resolve) => {
             Papa.parse(csv, {
               header: true,
-              delimiter: ';',
+              delimiter: ";",
               skipEmptyLines: true,
               complete: (results) => resolve(results.data),
-              
             });
           });
         },
@@ -48,18 +61,6 @@ module.exports = defineConfig({
 
     video: false,
     videoCompression: 32,
-    
-
-    reporter: "mochawesome",
-    reporterOptions: {
-      reportDir: "cypress/reports",
-      overwrite: true,
-      html: true,
-      json: true,
-      autoOpen: false,
-      charts: true,
-    },
-
     viewportWidth: 1920,
     viewportHeight: 1080,
     screenshotsFolder: "cypress/reports/screenshots",

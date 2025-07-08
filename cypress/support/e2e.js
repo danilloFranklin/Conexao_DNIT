@@ -15,8 +15,11 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+import 'cypress-mochawesome-reporter/register';
 
 Cypress.on("fail", (error, runnable) => {
     cy.screenshot(); // Tira um screenshot quando um erro ocorre
     throw error;
+
+    
   });
