@@ -47,9 +47,9 @@ describe("Práticas", () => {
     cy.get(`#curricularComponent > .br-list > :nth-child(${curricularComponentRandom}) > .br-radio > label`).click();
     cy.wait(1000);
 
-    cy.get(':nth-child(4) > .medium > #year > .br-input > .br-button').click();
+    cy.get('input[placeholder="Selecione a atividade utilizada na prática."]').click();
     cy.wait(1000);
-    cy.get(':nth-child(4) > .medium > #year > .br-list > :nth-child(1) > .br-radio > label').click();
+    cy.get('label[for*="activities_selector"]').eq(0).click();
     cy.wait(1000);
 
     cy.get("#curriculumContent").type(textocurto);
