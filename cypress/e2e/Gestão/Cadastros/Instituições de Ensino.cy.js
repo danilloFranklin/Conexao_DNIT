@@ -4,7 +4,7 @@ describe("Instituições de Ensino", () => {
     const fileName = "lista_instituicoes.csv"; // Nome do arquivo esperado
     const filePath = `cypress/downloads/${fileName}`;
     const textocurto = `Automação - ${faker.lorem.words(2)}`;
-    const telefoneValido = faker.phone.number("(##) #########");
+    const telefoneValido = faker.phone.number("###########");
     const emailValido = faker.internet.email();
     const numeroAleatorio = Math.floor(10000000 + Math.random() * 90000000);
 
