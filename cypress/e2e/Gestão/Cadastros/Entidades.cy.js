@@ -93,7 +93,7 @@ it("Buscar e limpar", () => {
       
     });
 
- it.only("Cadastrar e excluir", () => {
+ it("Cadastrar e excluir", () => {
       cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
       cy.get('button[data-toggle="menu"]').click();
       cy.contains("span", "Cadastros").click();
@@ -130,6 +130,8 @@ it("Buscar e limpar", () => {
       cy.get('input#searchbox').clear().type(textocurto);
       cy.contains('button', 'Buscar').click();
       cy.wait(1000);
+      cy.contains('td', 'Nenhum registro encontrado').closest('tr').find('td').should('be.visible')
+
 
 
       // validar o icone com o texto de que a busca que eu fiz não retornou nada.
