@@ -67,7 +67,7 @@ export const digitsDateRandomBetween = formatDateDigits(randomDate);
 
 // ================== TESTES ==================
 
-describe("Atividades", () => {
+describe("Planejamento", () => {
   const fileName = "home.pdf";
   const filePath = `cypress/downloads/${fileName}`;
   const textoAleatorio = faker.lorem.sentence();

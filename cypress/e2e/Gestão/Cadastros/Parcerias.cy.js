@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-describe("Entidades", () => {
+describe("Parcerias", () => {
 
   {
     const Foto_teste = "Foto_teste.jpg";
@@ -10,6 +10,8 @@ describe("Entidades", () => {
     const emailValido = faker.internet.email();
     const numeroAleatorio = Math.floor(10000000 + Math.random() * 90000000);
     const cepValido = "76995970";
+    const textolongo = faker.lorem.paragraphs(1);
+
 
     beforeEach(() => {
       cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/"); // Acesse a página antes de setar o localStorage
@@ -25,28 +27,27 @@ it("acessar lista", () => {
       cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
       cy.get('button[data-toggle="menu"]').click();
       cy.contains("span", "Cadastros").click();
-      cy.get('a[href="/conexao/gestao/entidades"] span').click();
-      cy.contains('td', 'DETRAN ALAGOAS').should("be.visible");
+      cy.get('a[href="/conexao/gestao/parcerias"] span').click();
+      cy.contains('span', 'DETRAN ALAGOAS').eq(0);
     });
     
     it("Filtrar e limpar", () => {
       cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
       cy.get('button[data-toggle="menu"]').click();
       cy.contains("span", "Cadastros").click();
-      cy.get('a[href="/conexao/gestao/entidades"] span').click();
-      cy.contains('td', 'DETRAN ALAGOAS').should("be.visible");
-      cy.get('input#input_state').should("be.visible").click().type("MG");
-      cy.contains('label', 'MG').should('be.visible').click();
+      cy.get('a[href="/conexao/gestao/parcerias"] span').click();
+      cy.contains('span', 'DETRAN ALAGOAS').eq(0).should('be.visible');
+      cy.get('input#input_state').click();
+      cy.contains('label', 'BA').click();
       cy.wait(600);
-      cy.get('input#input_city').should("be.visible").type("bocaiuva")
+      cy.get('input#input_city').should("be.visible").click().clear().type("Érico Cardoso");
       cy.wait(600);
-      cy.contains('label', 'Bocaiúva').click();
-      cy.contains('label', 'Com parcerias ativas').click();
+      cy.contains('label', 'Érico Cardoso').click();
+      cy.get('input#input_entity').should("be.visible").type("DETRAN ALAGOAS");
+      cy.contains('label', 'DETRAN ALAGOAS').click();
+      cy.contains('label', 'Cadastradas').click();
       cy.contains('button', 'Buscar').click();
-      cy.contains('td', 'Entidade Krycia 25/01').should("be.visible");
-      cy.contains('button', 'Limpar').click();
-      cy.contains('td', 'DETRAN ALAGOAS').should("be.visible");
-
+      cy.contains('td', 'Bahia Cardoso').should('be.visible');
 
 
     });
@@ -55,83 +56,75 @@ it("Buscar e limpar", () => {
       cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
       cy.get('button[data-toggle="menu"]').click();
       cy.contains("span", "Cadastros").click();
-      cy.get('a[href="/conexao/gestao/entidades"] span').click();
-      cy.contains('td', 'DETRAN ALAGOAS').should("be.visible");
-      cy.get('input#searchbox').type("Entidade Automação"); 
+      cy.get('a[href="/conexao/gestao/parcerias"] span').click();
+      cy.contains('span', 'DETRAN ALAGOAS').eq(0).should('be.visible');
+      cy.get('input#searchbox').type("Bahia Cardoso"); 
       cy.contains('button', 'Buscar').click();
-      cy.contains('td', 'Entidade Automação').should("be.visible");
+      cy.contains('td', 'Bahia Cardoso').should("be.visible");
       cy.contains('button', 'Limpar').click();
-      cy.contains('td', 'DETRAN ALAGOAS').should('be.visible');
+      cy.contains('span', 'DETRAN ALAGOAS').eq(0).should('be.visible');
     });
 
     it("Editar e salvar", () => {
       cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
       cy.get('button[data-toggle="menu"]').click();
       cy.contains("span", "Cadastros").click();
-      cy.get('a[href="/conexao/gestao/entidades"] span').click();
-      cy.contains('td', 'DETRAN ALAGOAS').should("be.visible");
-      cy.get('input#searchbox').type("Entidade Automação"); 
+      cy.get('a[href="/conexao/gestao/parcerias"] span').click();
+      cy.contains('span', 'DETRAN ALAGOAS').eq(0).should('be.visible');
+      cy.get('input#searchbox').type("Bahia Cardoso"); 
       cy.contains('button', 'Buscar').click();
-      cy.contains('td', 'Entidade Automação').should("be.visible");
+      cy.contains('td', 'Bahia Cardoso').should("be.visible");
       cy.get('i.fa-pen').click();
       cy.wait(1000);
-      cy.get('input#identification').clear().type(textocurto);
+      cy.get('input#title').clear().type(textocurto);
       cy.contains('button', 'Próxima').click();
       cy.get('button[type="submit"]').click();
-
+      cy.wait(1000);
+      cy.contains('button', 'Limpar').click();
       cy.get('input#searchbox').clear().type(textocurto); 
       cy.contains('button', 'Buscar').click();
       cy.contains('td', textocurto).should("be.visible");
       cy.get('i.fa-pen').click();
       cy.wait(1000);
-      cy.get('input#identification').clear().type('Entidade Automação');
+      cy.get('input#title').clear().type('Bahia Cardoso');
       cy.contains('button', 'Próxima').click();
       cy.get('button[type="submit"]').click();
-      cy.contains('button', 'Limpar').click();
-      cy.wait(1000);
-      cy.contains('td', 'Entidade Automação').should("be.visible");
-      
-    });
+      cy.get('input#searchbox').clear().type("Bahia Cardoso"); 
+      cy.contains('button', 'Buscar').click();
+      cy.contains('td', 'Bahia Cardoso').should("be.visible");
+  
 
+    });
  it("Cadastrar e excluir", () => {
       cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
       cy.get('button[data-toggle="menu"]').click();
       cy.contains("span", "Cadastros").click();
-      cy.get('a[href="/conexao/gestao/entidades"] span').click();
-      cy.contains('td', 'DETRAN ALAGOAS').should("be.visible");
+      cy.get('a[href="/conexao/gestao/parcerias"] span').click();
+      cy.contains('span', 'DETRAN ALAGOAS').eq(0).should('be.visible');
       cy.get('i.fa-plus').click();
       cy.wait(1000);
-      cy.get('input#identification').type(textocurto);
-      cy.get('input#email').type(emailValido);
-      cy.get('input[type="text"]').eq(2).type(telefoneValido)
-      cy.get('input#zipCode').type(cepValido);
-      cy.wait(600);
-      cy.contains('p', 'Logradouro*: Avenida Itália Cautiero Franco').should("be.visible");
+      cy.get('input#input_entitie').click();
+      cy.contains('label', 'DETRAN ALAGOAS').click();
+      cy.get('i.fa-plus').click();
+      cy.contains('p', 'DETRAN ALAGOAS').should('be.visible');
+      cy.get('input#title').type(textocurto);
+      cy.get('textarea#description').type(textolongo);
       cy.get('input[type="file"]').attachFile(Foto_teste);
       cy.contains(Foto_teste).should("be.visible");
-      cy.get('input#number').type('500');
-      cy.wait(1000);
+      cy.get('input#From').click();
+      cy.get('.open > .flatpickr-innerContainer > .flatpickr-rContainer > .flatpickr-days > .dayContainer > .today').click();
       cy.contains('button', 'Próxima').click();
       cy.get('label[for="regional"]').click();
-      cy.get('input#input_state').should('be.visible').click();
-      cy.contains('label', 'Minas Gerais').should('exist').click();
-      cy.get('i.fa-plus').click();
+      cy.get('input#input_state').click();
+      cy.contains('label', 'Minas Gerais').click();
+      cy.get('i.fa-plus').eq(1).click();
+      cy.contains('p', 'Minas Gerais').should('be.visible');
       cy.contains('button', 'Confirmar').click();
+      cy.get('label[for="stateDependencies"]').click();
       cy.get('button[type="submit"]').click();
-      cy.contains('td', textocurto);
-
-      cy.get('input#searchbox').type(textocurto);
-      cy.contains('button', 'Buscar').click();
-      cy.wait(1000);
-      cy.contains('td', textocurto).should("be.visible");
-      cy.get('i.fa-trash').click();
-      cy.wait(600);
-      cy.contains('button', 'Sim').click();
-      cy.get('input#searchbox').clear().type(textocurto);
-      cy.contains('button', 'Buscar').click();
-      cy.wait(1000);
-      cy.contains('td', 'Nenhum registro encontrado').closest('tr').find('td').should('be.visible')
-      
+      cy.contains('td', textocurto).should('be.visible');
+    
     });
 }
+
 });

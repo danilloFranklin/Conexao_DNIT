@@ -48,9 +48,9 @@ describe("Práticas", () => {
     cy.wait(1000);
 
     cy.get('input[placeholder="Selecione a atividade utilizada na prática."]').click();
-    cy.wait(1000);
+    cy.wait(1500);
     cy.get('label[for*="activities_selector"]').eq(0).click();
-    cy.wait(1000);
+    cy.wait(2000);
 
     cy.get("#curriculumContent").type(textocurto);
     cy.wait(1000);
