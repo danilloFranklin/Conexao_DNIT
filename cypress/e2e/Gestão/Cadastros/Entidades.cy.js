@@ -57,9 +57,9 @@ it("Buscar e limpar", () => {
       cy.contains("span", "Cadastros").click();
       cy.get('a[href="/conexao/gestao/entidades"] span').click();
       cy.contains('td', 'DETRAN ALAGOAS').should("be.visible");
-      cy.get('input#searchbox').type("Entidade Automação"); 
+      cy.get('input#searchbox').type("Entidade busca"); 
       cy.contains('button', 'Buscar').click();
-      cy.contains('td', 'Entidade Automação').should("be.visible");
+      cy.contains('td', 'Entidade busca').should("be.visible");
       cy.contains('button', 'Limpar').click();
       cy.contains('td', 'DETRAN ALAGOAS').should('be.visible');
     });
@@ -70,9 +70,9 @@ it("Buscar e limpar", () => {
       cy.contains("span", "Cadastros").click();
       cy.get('a[href="/conexao/gestao/entidades"] span').click();
       cy.contains('td', 'DETRAN ALAGOAS').should("be.visible");
-      cy.get('input#searchbox').type("Entidade Automação"); 
+      cy.get('input#searchbox').type("Automação - absens tardus"); 
       cy.contains('button', 'Buscar').click();
-      cy.contains('td', 'Entidade Automação').should("be.visible");
+      cy.contains('td', 'Automação - absens tardus').should("be.visible");
       cy.get('i.fa-pen').click();
       cy.wait(1000);
       cy.get('input#identification').clear().type(textocurto);
@@ -84,12 +84,12 @@ it("Buscar e limpar", () => {
       cy.contains('td', textocurto).should("be.visible");
       cy.get('i.fa-pen').click();
       cy.wait(1000);
-      cy.get('input#identification').clear().type('Entidade Automação');
+      cy.get('input#identification').clear().type('Automação - absens tardus');
       cy.contains('button', 'Próxima').click();
       cy.get('button[type="submit"]').click();
       cy.contains('button', 'Limpar').click();
       cy.wait(1000);
-      cy.contains('td', 'Entidade Automação').should("be.visible");
+      cy.contains('td', 'Automação - absens tardus').should("be.visible");
       
     });
 
