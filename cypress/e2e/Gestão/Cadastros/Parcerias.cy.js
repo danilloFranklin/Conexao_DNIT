@@ -3,7 +3,7 @@ describe("Parcerias", () => {
 
   {
     const Foto_teste = "Foto_teste.jpg";
-    const fileName = "lista_instituicoes.csv"; // Nome do arquivo esperado
+    const fileName = "parcerias.csv"; // Nome do arquivo esperado
     const filePath = `cypress/downloads/${fileName}`;
     const textocurto = `Automação - ${faker.lorem.words(2)}`;
     const telefoneValido = faker.phone.number("(##) #########");
@@ -95,7 +95,7 @@ it("Buscar e limpar", () => {
   
 
     });
- it("Cadastrar e excluir", () => {
+ it("Cadastrar", () => {
       cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
       cy.get('button[data-toggle="menu"]').click();
       cy.contains("span", "Cadastros").click();
@@ -125,6 +125,38 @@ it("Buscar e limpar", () => {
       cy.contains('td', textocurto).should('be.visible');
     
     });
+
+    it("Baixar CSV", () => {
+      cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
+      cy.get('button[data-toggle="menu"]').click();
+      cy.contains("span", "Cadastros").click();
+      cy.get('a[href="/conexao/gestao/parcerias"] span').click();
+      cy.contains('span', 'DETRAN ALAGOAS').eq(0).should('be.visible');
+   
+      cy.get('div.actions-trigger button').click();
+
+      cy.readFile(filePath, { timeout: 90000 }).should("exist");
+
+      // Faz o parse do CSV e valida se existe "Bahia Cardoso" na coluna "Identificação da Parceria"
+      cy.task("parseCsv", { filePath }).then((rows) => {
+        // Loga os dados lidos (opcional, para debug)
+
+        const registroEncontrado = rows.find((row) =>
+          row["Identificação da Parceria"]?.includes(
+            "Bahia Cardoso"
+          )
+        );
+
+        expect(
+          registroEncontrado,
+          'Bahia Cardoso não encontrado na coluna "Instituição"'
+        ).to.exist;
+      });
+
+      // Exclui o arquivo após validação
+      cy.task("deleteFile", filePath).should("equal", true);
+    });
+
 }
 
 });
