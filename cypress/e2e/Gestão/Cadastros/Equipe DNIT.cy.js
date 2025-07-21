@@ -1,8 +1,8 @@
 import { faker } from "@faker-js/faker";
-describe("Usuários", () => {
+describe("Equipe DNIT", () => {
   {
     const Foto_teste = "Foto_teste.jpg";
-    const fileName = "lista_usuarios.csv"; // Nome do arquivo esperado
+    const fileName = "lista_equipes.csv"; // Nome do arquivo esperado
     const filePath = `cypress/downloads/${fileName}`;
     const textocurto = `Automação - ${faker.lorem.words(2)}`;
     const telefoneValido = faker.phone.number("(##) #########");
@@ -25,47 +25,47 @@ describe("Usuários", () => {
       cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
       cy.get('button[data-toggle="menu"]').click();
       cy.contains("span", "Cadastros").click();
-      cy.get('a[href="/conexao/gestao/usuarios"] span').click();
-      cy.contains("td", "GESSE FERREIRA DIAS").should("be.visible");
+      cy.get('a[href="/conexao/gestao/equipe"]').click();
+      cy.contains('td', 'Danillo Franklin Leite Lopes').should("be.visible");
     });
     it("Filtrar e Limpar", () => {
       cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
       cy.get('button[data-toggle="menu"]').click();
       cy.contains("span", "Cadastros").click();
-      cy.get('a[href="/conexao/gestao/usuarios"] span').click();
-      cy.contains("td", "GESSE FERREIRA DIAS").should("be.visible");
+      cy.get('a[href="/conexao/gestao/equipe"]').click();
+      cy.contains('td', 'Danillo Franklin Leite Lopes').should("be.visible");
       cy.get("input#input_federativeUnit").click();
       cy.contains("label", "MG").click();
       cy.get("input#input_city").click();
       cy.contains("label", "Bocaiúva").click();
       cy.get('label[for="active"]').click();
       cy.contains("button", "Buscar").click();
-      cy.contains("td", "Sarah Connor").should("be.visible");
+      cy.contains("td", "Samara GOL").should("be.visible");
     });
     it("Buscar e Limpar", () => {
       cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
       cy.get('button[data-toggle="menu"]').click();
       cy.contains("span", "Cadastros").click();
-      cy.get('a[href="/conexao/gestao/usuarios"] span').click();
-      cy.contains("td", "GESSE FERREIRA DIAS").should("be.visible");
-      cy.get("input#searchbox").type("Sarah Connor");
+      cy.get('a[href="/conexao/gestao/equipe"]').click();
+      cy.contains('td', 'Danillo Franklin Leite Lopes').should("be.visible");
+      cy.get("input#searchbox").type("Samara GOL");
       cy.contains("button", "Buscar").click();
-      cy.contains("td", "Sarah Connor").should("be.visible");
+      cy.contains("td", "Samara GOL").should("be.visible");
       cy.contains("button", "Limpar").click();
-      cy.contains("td", "GESSE FERREIRA DIAS").should("be.visible");
+      cy.contains('td', 'Danillo Franklin Leite Lopes').should("be.visible");
     });
     it("Alterar Perfil", () => {
       cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
       cy.get('button[data-toggle="menu"]').click();
       cy.contains("span", "Cadastros").click();
-      cy.get('a[href="/conexao/gestao/usuarios"] span').click();
-      cy.contains("td", "GESSE FERREIRA DIAS").should("be.visible");
-      cy.get("input#searchbox").type("Sarah Connor");
+      cy.get('a[href="/conexao/gestao/equipe"]').click();
+      cy.contains('td', 'Danillo Franklin Leite Lopes').should("be.visible");
+      cy.get("input#searchbox").type("Samara GOL");
       cy.contains("button", "Buscar").click();
-      cy.contains("td", "Sarah Connor").should("be.visible");
+      cy.contains("td", "Samara GOL").should("be.visible");
       cy.get('i[aria-describedby="tooltipEditar"]').click();
       cy.wait(700);
-      cy.get('button[aria-label="Exibir lista"] i').click();
+      cy.get('input#input_userProfile').click();
       cy.contains("label", "AA - teste teste").click();
       cy.get('button[type="submit"]').click();
       cy.contains("td", "AA - teste teste")
@@ -74,7 +74,7 @@ describe("Usuários", () => {
         .should("be.visible");
       cy.get('i[aria-describedby="tooltipEditar"]').click();
       cy.wait(700);
-      cy.get('button[aria-label="Exibir lista"] i').click();
+      cy.get('input#input_userProfile').click();
       cy.contains("label", "Professor").click();
       cy.get('button[type="submit"]').click();
       cy.contains("td", "Professor")
@@ -86,40 +86,53 @@ describe("Usuários", () => {
       cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
       cy.get('button[data-toggle="menu"]').click();
       cy.contains("span", "Cadastros").click();
-      cy.get('a[href="/conexao/gestao/usuarios"] span').click();
-      cy.contains("td", "GESSE FERREIRA DIAS").should("be.visible");
-      cy.get("input#searchbox").type("Professor Usuário");
+      cy.get('a[href="/conexao/gestao/equipe"]').click();
+      cy.contains('td', 'Danillo Franklin Leite Lopes').should("be.visible");
+      cy.get("input#searchbox").type("José da Silva");
       cy.contains("button", "Buscar").click();
       cy.wait(2000);
       cy.get("i.fa-link").click();
       cy.wait(2000);
-      cy.contains("span", "Inativo").should("be.visible");
+      cy.get("input#searchbox").clear().type("José da Silva");
+      cy.contains("button", "Buscar").click();
+      cy.wait(800);
       cy.get("i.fa-link").click();
+      cy.wait(1500);
+      cy.get("input#searchbox").clear().type("José da Silva");
+      cy.contains("button", "Buscar").click();
+
+      cy.get('i[aria-describedby="tooltipEditar"]').click();
+      cy.wait(700);
+      cy.get('input#input_userProfile').click();
+      cy.contains("label", "AA - teste teste").click();
+      cy.get('button[type="submit"]').click();
       cy.wait(2000);
-      cy.contains("span", "Ativo").should("be.visible");
+      cy.get("input#searchbox").clear().type("José da Silva");
+      cy.contains("button", "Buscar").click();
+      cy.contains('span', 'Ativo').eq(0).should('be.visible');
     });
     it("Baixar CSV", () => {
       cy.visit("https://conexao-dnit-hom.labtrans.ufsc.br/conexao/gestao/");
       cy.get('button[data-toggle="menu"]').click();
       cy.contains("span", "Cadastros").click();
-      cy.get('a[href="/conexao/gestao/usuarios"] span').click();
-      cy.contains("td", "GESSE FERREIRA DIAS").should("be.visible");
+      cy.get('a[href="/conexao/gestao/equipe"]').click();
+      cy.contains('td', 'Danillo Franklin Leite Lopes').should("be.visible");
 
       cy.get("div.actions-trigger button").click();
 
       cy.readFile(filePath, { timeout: 90000 }).should("exist");
 
-      // Faz o parse do CSV e valida se existe "Mansão Xavier" na coluna "Instituição"
+      // Faz o parse do CSV e valida se existe "José da Silva" na coluna "Nome"
       cy.task("parseCsv", { filePath }).then((rows) => {
         // Loga os dados lidos (opcional, para debug)
 
         const registroEncontrado = rows.find((row) =>
-          row["Instituição"]?.includes("Mansão Xavier")
+          row["Nome"]?.includes("José da Silva")
         );
 
         expect(
           registroEncontrado,
-          'Mansão Xavier não encontrado na coluna "Instituição"'
+          'José da Silva não encontrado na coluna "Nome"'
         ).to.exist;
       });
 
