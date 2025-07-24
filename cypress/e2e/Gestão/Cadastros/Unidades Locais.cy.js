@@ -120,9 +120,7 @@ describe("Unidades Locais", () => {
         cy.get('input#searchbox').clear().type(textocurto);
         cy.contains('button', 'Buscar').click();
         cy.wait(1500);
-        cy.get('div[data-search="data-search"] td').contains('Nenhum registro encontrado');
-
-
+        cy.get('div[data-search="data-search"] td').contains('Nenhum registro encontrado').should('exist');
       });
   }
 });

@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 describe("Outras Instituições", () => {
   {
-    const fileName = "lista_outras_instituições.csv"; // Nome do arquivo esperado
+    const fileName = "lista_outras_instituicoes.csv"; // Nome do arquivo esperado
     const filePath = `cypress/downloads/${fileName}`;
     const textocurto = `Automação - ${faker.lorem.words(2)}`;
     const telefoneValido = faker.phone.number("###########");
